@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>智汇销售助手</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #f5f6f8;
+      color: #1f2329;
+      font-size: 14px;
+    }
+    .wrap { padding: 12px; }
+    h1 { font-size: 16px; margin: 0 0 8px; }
+    .status {
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid #e5e6eb;
+      margin-bottom: 10px;
+    }
+    .status.loading { border-color: #3370ff; background: #f0f5ff; }
+    .status.error { border-color: #f54a45; background: #fff1f0; color: #a8071a; }
+    .status.ok { border-color: #00b42a; background: #f0fff4; }
+    pre {
+      margin: 0;
+      padding: 12px;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      border-radius: 8px;
+      overflow: auto;
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .hint { color: #86909c; font-size: 12px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>智汇销售助手</h1>
+    <div id="status" class="status loading">初始化中…</div>
+    <pre id="output">{}</pre>
+    <p class="hint">请在企业微信客户端 · 客户联系聊天侧边栏中打开本页。</p>
+  </div>
+
+  <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+  <script src="https://open.work.weixin.qq.com/wwopen/js/jwxwork-1.0.0.js"></script>
+  <script>
+    const statusEl = document.getElementById('status');
+    const outputEl = document.getElementById('output');
+
+    function setStatus(text, type) {
+      statusEl.textContent = text;
+      statusEl.className = 'status ' + (type || '');
+    }
+
+    function showJson(label, data) {
+      var obj = {};
+      try { obj = JSON.parse(outputEl.textContent); } catch (_) {}
+      obj[label] = data;
+      outputEl.textContent = JSON.stringify(obj, null, 2);
+    }
+
+    function getSignUrl() {
+      return location.href.split('#')[0];
+    }
+
+    async function fetchSign() {
+      var api = '/api/jssdk-sign?url=' + encodeURIComponent(getSignUrl());
+      var res = await fetch(api);
+      var data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || ('HTTP ' + res.status));
+      return data;
+    }
+
+    function invokeApi(name) {
+      return new Promise(function (resolve, reject) {
+        wx.invoke(name, {}, function (res) {
+          if (res.err_msg && res.err_msg.indexOf(':ok') === -1) {
+            reject(new Error(res.err_msg));
+          } else {
+            resolve(res);
+          }
+        });
+      });
+    }
+
+    function agentConfig(sign) {
+      return new Promise(function (resolve, reject) {
+        wx.agentConfig({
+          corpid: sign.corpid,
+          agentid: sign.agentid,
+          timestamp: sign.agentTimestamp,
+          nonceStr: sign.agentNonceStr,
+          signature: sign.agentSignature,
+          jsApiList: ['getContext', 'getCurExternalContact', 'getCurExternalChat'],
+          success: resolve,
+          fail: function (err) { reject(new Error(JSON.stringify(err))); },
+        });
+      });
+    }
+
+    async function run() {
+      if (typeof wx === 'undefined') {
+        setStatus('未检测到企微 JS-SDK，请在企业微信内打开', 'error');
+        return;
+      }
+
+      try {
+        setStatus('请求签名…', 'loading');
+        var sign = await fetchSign();
+        showJson('sign', { corpid: sign.corpid, agentid: sign.agentid });
+
+        setStatus('wx.config…', 'loading');
+        wx.config({
+          beta: false,
+          debug: false,
+          appId: sign.corpid,
+          timestamp: sign.timestamp,
+          nonceStr: sign.nonceStr,
+          signature: sign.signature,
+          jsApiList: ['getContext', 'getCurExternalContact', 'getCurExternalChat'],
+        });
+
+        wx.ready(async function () {
+          try {
+            setStatus('wx.agentConfig…', 'loading');
+            await agentConfig(sign);
+            setStatus('获取会话信息…', 'loading');
+
+            var results = {};
+            for (var api of ['getContext', 'getCurExternalContact', 'getCurExternalChat']) {
+              try {
+                results[api] = await invokeApi(api);
+              } catch (e) {
+                results[api] = { error: e.message };
+              }
+            }
+            showJson('apis', results);
+            setStatus('就绪', 'ok');
+          } catch (e) {
+            setStatus('失败: ' + e.message, 'error');
+            showJson('error', { message: e.message });
+          }
+        });
+
+        wx.error(function (res) {
+          setStatus('wx.config 失败', 'error');
+          showJson('wx.error', res);
+        });
+      } catch (e) {
+        setStatus('签名失败: ' + e.message, 'error');
+        showJson('error', { message: e.message });
+      }
+    }
+
+    run();
+  </script>
+</body>
+</html>
