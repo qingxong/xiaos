@@ -2,7 +2,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
 import express from 'express';
-import { getAccessToken, getTicket, signJsSdk } from './wework-api.js';
+import { getAccessToken, getAgentConfigTicket, getJsApiTicket, signJsSdk } from './wework-api.js';
 
 dotenv.config();
 
@@ -40,8 +40,8 @@ app.get('/api/jssdk-sign', async (req, res) => {
 
   try {
     const accessToken = await getAccessToken(corpId, corpSecret);
-    const corpTicket = await getTicket(accessToken, 'jsapi');
-    const agentTicket = await getTicket(accessToken, 'agent_config');
+    const corpTicket = await getJsApiTicket(accessToken);
+    const agentTicket = await getAgentConfigTicket(accessToken);
 
     const corpSign = signJsSdk(corpTicket, url);
     const agentSign = signJsSdk(agentTicket, url);

@@ -41,13 +41,28 @@ export async function getAccessToken(corpId, corpSecret) {
   return data.access_token;
 }
 
-export async function getTicket(accessToken, type) {
-  const cacheKey = `ticket:${type}:${accessToken.slice(0, 12)}`;
+/** wx.config：企业 jsapi_ticket */
+export async function getJsApiTicket(accessToken) {
+  const cacheKey = `jsapi_ticket:${accessToken.slice(0, 12)}`;
   const cached = getCache(cacheKey);
   if (cached) return cached;
 
   const data = await getJson(
-    `${API_BASE}/cgi-bin/ticket/get?access_token=${accessToken}&type=${type}`,
+    `${API_BASE}/cgi-bin/get_jsapi_ticket?access_token=${accessToken}`,
+  );
+
+  setCache(cacheKey, data.ticket, Math.max(60, data.expires_in - 300));
+  return data.ticket;
+}
+
+/** wx.agentConfig：应用 agent_config ticket */
+export async function getAgentConfigTicket(accessToken) {
+  const cacheKey = `agent_config:${accessToken.slice(0, 12)}`;
+  const cached = getCache(cacheKey);
+  if (cached) return cached;
+
+  const data = await getJson(
+    `${API_BASE}/cgi-bin/ticket/get?access_token=${accessToken}&type=agent_config`,
   );
 
   setCache(cacheKey, data.ticket, Math.max(60, data.expires_in - 300));
