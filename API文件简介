@@ -1,0 +1,188 @@
+介绍
+下面的API文档是专门为您根据当前表单的配置生成的，提供了完整的样例数据结构和请求路径。如果您删除/添加字段或者修改字段标题，则该文档里所对应的字段字段的其他信息也会相应更改。
+规则
+API的统一访问地址为 https://wx.hnzhcyy.cn/
+所有API请求都必须通过HTTPS进行身份验证和发起
+统一采用POST请求的形式
+数据传输编码为UTF-8
+所有数据均为JSON格式
+频率限制
+5次/秒
+认证方式
+使用基于简单令牌的身份验证（在「开放平台」>>「密钥管理」生成或管理您的密钥），APIKey默认未生成，需要点击创建API Key生成。 生成方式：开放平台 >> api密钥 >> 创建密钥（自定义密钥），点击右侧的API文档可以查看对应的API文档。
+对于生成的APIKey还可以进行重置和删除。
+通过 HTTP Headers 设置Authorization的值为"Bearer YOUR_APIKEY"来进行安全性认证
+示例如下：
+$ curl -i https://wx.hnzhcyy.cn/openapi/v1 \ 
+   -H "Authorization: Bearer YOUR_APIKEY"
+请注意：APIKey与您的账户拥有相同的权限，请务必保密！
+错误对照表
+所有API使用状态码+错误码的响应方式来表示错误原因。接口正确统一返回HTTP状态码为2xx的正确响应。接口错误统一返回HTTP状态码为400的错误响应，同时响应内容会返回错误码（code）和错误信息（message）。
+HTTP/1.1 400
+Content-Type: application/json
+
+{
+   "code": 4004,
+   "message": 超出请求频率限制
+}
+状态返回码（status code）	说明
+2xx	响应成功
+400	接口错误统一返回
+当状态返回码为400时，服务器会返回具体的错误码 code 和错误信息 message，对照表如下：
+错误码（code）	说明
+4001	Incorrect interface parameters
+4002	Incorrect form type
+4003	The current package does not include this feature
+4004	Exceeded request frequency limit
+4005	Package usage exceeds limit
+4006	Inserting data failed, backend code returned error:
+4007	Image size exceeds the allowed size in the package
+4008	Image upload unsuccessful
+4009	Aggregation table validation failed
+4010	Data insertion successful, backend code returned error:
+4011	Data does not exist
+4012	Department does not exist
+4013	User does not exist
+4014	Batch operation in progress, current operation rejected
+4015	The current operation only supports team mode as normal mode
+4016	The user ID format within the enterprise is incorrect, only supporting characters, numbers, and symbols (. - _ @), up to 256 digits
+4017	User ID already exists within the enterprise
+4018	Incorrect note format, within 32 bits
+4019	Incorrect format of professional title, within 16 digits
+4020	The name format is incorrect. It can only be in Chinese, English, numbers, underscores, (,), -, spaces, and spaces cannot be within the first and last 26 digits
+4021	Department parameter cannot be empty
+4022	The site does not allow users to register
+4023	The format of the department name is illegal. It can only be in Chinese, English, numbers, underscores, (,), -, spaces, and spaces cannot be within the first and last 16 digits
+4024	There are sub departments with the same name under the same level department
+4025	Parent department does not exist
+4026	The department number is illegal
+4027	Duplicate department number
+4028	Departments with sub departments cannot be deleted
+4029	Departments with members cannot be deleted
+4030	The number of departments imported in a single instance exceeds the limit
+4031	The number of department cascading levels exceeds the limit
+4032	There is a cycle in departmental relationships
+4033	At least one sub department needs to belong to the root department
+4034	The number of members imported in a single instance exceeds the limit
+4035	Duplicate user ID within the enterprise
+4036	Incorrect registration parameters
+4037	Account has been bound to WeChat ID
+4038	WeChat unionid has been bound to an account
+4039	WeChat openid has been bound to an account
+4040	The format of WeChat unionid is illegal
+4041	The format of WeChat openid is illegal
+4042	The site does not have access to the Open platform interface
+4043	User does not belong to the specified team
+4044	Team does not exist
+4045	User does not belong to the specified department
+4046	Batch creation of data exceeding the limit of 300 entries
+4047	Administrator cannot resign
+4048	Account already exists
+5001	The return parameter is not in JSON format
+5002	Execution process start failed
+5003	Failed to obtain source file
+5004	Script object creation failed
+5005	Failed to read script
+5006	_webapi function does not exist
+5007	Script run error
+5008	Unable to find the corresponding responsible person
+5009	Unable to find the person in charge after rollback
+5010	Invalid process data
+5011	Unable to find flow node
+5044	Subprocess failed
+5108	Parameter formatting error
+5109	The number of scripts running exceeds the limit
+5110	Illegal value in JSON passed in
+6001	Role group does not exist
+6002	role_no already exists
+6003	Role group creation error
+6004	Role group modification error
+6005	Role group deletion error
+6006	Add failed
+7001	External contact group does not exist
+7002	The group name does not comply with the rules
+7003	Duplicate name with existing group
+7004	Group repetition
+7005	Default grouping cannot be deleted
+7006	There are members in the group that have not been deleted
+7007	External contact already exists
+7008	Abnormal modification of external contact information
+7009	The user is already a member of the address book and cannot join external contacts
+7010	External contact does not exist
+8001	Enterprise creators cannot join any management groups
+8002	Management group name does not comply with rules
+8003	System administrator cannot remove
+8004	Already in another group
+8005	Management group already exists
+8006	The system management group cannot operate
+8007	Management group does not exist
+8008	parameter error
+9997	Sorry, your account has been deactivated
+9998	Sorry, your account has been banned
+9999	System abnormality, please contact the administrator to provide feedback on this issue
+10001	Application group creation failed
+10002	Failed to rename the application group
+10003	The application group name does not comply with the rules
+10004	Application group does not exist
+10005	Application group deletion failed
+10006	Form does not exist
+11001	data duplication
+11002	Transfer not allowed
+11003	The data corresponding to the unique field already exists
+11004	Please pass in the data ID
+11005	Data does not exist
+11006	Pre event triggering exception
+11007	Data Assistant Trigger Exception
+11008	Aggregation table validation exception
+11009	Post event triggering exception
+11010	Front end event triggering exception
+12001	Message sending failed
+12002	Message content error
+12003	No legal message recipient was matched
+13001	Key does not exist
+13002	The current package does not include platform level interface permissions
+13003	Incorrect team information
+13004	Gift failed
+13005	Account does not exist
+13006	App installation failed
+13007	There are applications in the group and cannot be deleted
+13008	Form data is read-only
+40012	Authorization parameter not detected
+40013	Authorization parameter error
+404	Interface does not exist
+Post接口
+POST -
+https://wx.hnzhcyy.cn/openapi/v1/app/50cf5a8c1217c1b137c55032/post
+点击复制
+
+能自定义传入json结构数据，将传入的数据发送给后端事件 _webapi，返回自定义json结构数据
+请求数据样例：
+{
+   "time": "20200603",
+   "action": "request",
+   "content": "this is local msg"
+}
+_webapi事件原型
+_webapi(arg,info)
+参数	类型	说明
+arg	array	自定义传入的json结构数据，转为内部可使用的数组格式
+info	array	附加信息，目前只包含ip信息
+_webapi事件接收和返回样例：
+LUA 语法:
+function _webapi(arg,info)
+    arr = {}
+    arr["code"] = 200 // 自定义返回值
+    arr["msg"] = "接到消息" // 自定义返回消息
+    return cjson.encode(arr)
+end
+Python 语法:
+def _webapi(arg,info):
+    arr = {}
+    arr["code"] = 200 # 自定义返回值
+    arr["msg"] = "接到消息" # 自定义返回消息
+    return json.dumps(arr,ensure_ascii=False)
+响应数据样例：
+{
+   "code": 200,
+   "msg": "接到消息"
+}

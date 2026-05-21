@@ -1,0 +1,1095 @@
+字段别名对应表
+
+字段标题	字段原始别名	字段别名	字段类型
+订单ID	_widget_1766741553624	_widget_1766741553624	sn
+是否存在合同	_widget_1767525953455	_widget_1767525953455	combo
+是否存在预收款	_widget_1767525953610	_widget_1767525953610	combo
+客户ID	_widget_1766738248098	_widget_1766738248098	text
+客户类型	_widget_1766738248511	_widget_1766738248511	combo
+对接人信息	_widget_1771896977512	_widget_1771896977512	subform
+姓名	_widget_1771896977604	_widget_1771896977604	text
+联系方式	_widget_1771896977607	_widget_1771896977607	text
+客户姓名	_widget_1766738248133	_widget_1766738248133	text
+客户电话	_widget_1766738248151	_widget_1766738248151	text
+是否已有合同	_widget_1766738248853	_widget_1766738248853	combo
+是否已有收款	_widget_1766738248990	_widget_1766738248990	combo
+合同编号	_widget_1766738249068	_widget_1766738249068	text
+销售负责人	_widget_1766738249103	_widget_1766738249103	user
+发起公司	_widget_1766738249415	_widget_1766738249415	combo
+公司类型	_widget_1766738249201	_widget_1766738249201	combo
+群名称	_widget_1766738249340	_widget_1766738249340	text
+标的企业	_widget_1766738249375	_widget_1766738249375	text
+任务清单	_widget_1766738249550	_widget_1766738249550	subform
+业务名称	_widget_1766739104754	_widget_1766739104754	combo
+工位/代账年限	_widget_1766739104867	_widget_1766739104867	combo
+备注	_widget_1766739105091	_widget_1766739105091	text
+使用地址(废弃)	_widget_1766739107603	_widget_1766739107603	combo
+企业备用联系人姓名	_widget_1778135636199	_widget_1778135636199	text
+企业备用联系人电话	_widget_1778136649008	_widget_1778136649008	text
+企业纳税人类型	_widget_1766739105222	_widget_1766739105222	combocheck
+注册资本	_widget_1766739105371	_widget_1766739105371	text
+经营范围	_widget_1766739106211	_widget_1766739106211	textarea
+公司名称预选	_widget_1766739105406	_widget_1766739105406	subform
+公司名称	_widget_1766739105454	_widget_1766739105454	text
+备用字号	_widget_1766739105457	_widget_1766739105457	text
+公司高管人员	_widget_1766739106096	_widget_1766739106096	subform
+人员姓名	_widget_1766739106097	_widget_1766739106097	text
+实名电话	_widget_1766739106098	_widget_1766739106098	text
+担任岗位	_widget_1766739106358	_widget_1766739106358	checkboxgroup
+邮箱	_widget_1778137238137	_widget_1778137238137	text
+地址	_widget_1778137238149	_widget_1778137238149	address
+备注	_widget_1767151590388	_widget_1767151590388	textarea
+公司股东人员	_widget_1766739105550	_widget_1766739105550	subform
+股东姓名	_widget_1766739105551	_widget_1766739105551	text
+实名电话	_widget_1766739105552	_widget_1766739105552	text
+持股比例	_widget_1766739106033	_widget_1766739106033	text
+备注	_widget_1767151590438	_widget_1767151590438	textarea
+客户图片资料等	_widget_1766740160112	_widget_1766740160112	upload
+是否沟通次年续费价格	_widget_1766739106641	_widget_1766739106641	combo
+次年地址金额	_widget_1766739106946	_widget_1766739106946	number
+次年代账金额	_widget_1766739106966	_widget_1766739106966	number
+次年续费备注	_widget_1766739107307	_widget_1766739107307	number
+实收金额	_widget_1766740159905	_widget_1766740159905	number
+应返金额	_widget_1766740159925	_widget_1766740159925	number
+应收金额	_widget_1766740159945	_widget_1766740159945	number
+开始服务时间	_widget_1766740160045	_widget_1766740160045	datetime
+结束服务时间	_widget_1766740160074	_widget_1766740160074	datetime
+备注	_widget_1766740160247	_widget_1766740160247	textarea
+上传文件
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/upload_file
+点击复制
+
+在指定表单中通过url上传一个文件，返回文件信息，返回的信息直接用于创建和修改接口填写在附件或图片控件值中。
+请求参数：
+参数	必须	类型	说明
+name	否	String	文件名称
+url	是	String	文件链接，需要能访问到的正确链接地址
+返回参数：
+参数	类型	说明
+data	Object	返回文件信息，直接用于创建和修改接口填写在附件或图片控件值中
+请求示例：
+[
+    {
+        "name": "123.jpg",
+        "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+    },
+    {
+        "name": "456.jpg",
+        "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+    }
+]
+响应数据样例：
+{
+    "data": [
+        {
+            "name": "123.jpg",
+            "size": 68065,
+            "mime": "image/jpeg",
+            "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+        },
+        {
+            "name": "456.jpg",
+            "size": 68065,
+            "mime": "image/jpeg",
+            "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+        }
+    ]
+}
+新增数据
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/data_create
+点击复制
+
+在指定表单中添加一条数据
+另外，系统字段 和 以下所列举的字段不支持添加和修改数据：
+* 分割线
+* 附件
+* 关联数据、关联查询
+请求参数：
+参数	必须	类型	说明
+data	是	Object	数据内容
+is_start_workflow	否	Boolean	用来控制是否触发流程，默认不触发流程
+is_start_event	否	Boolean	是否触发事件（模块事件/_form事件/数据助手/前端事件）
+operator	否	String	操作人id，默认使用应用所有者的id
+useUtcFormat	否	Boolean	时间返回值是否使用Utc格式
+返回参数：
+参数	类型	说明
+data	Object	返回数据内容，返回数据中字段名称用的是字段别名
+data.appId	String	应用id
+data.entryId	String	表单id
+data.creator	Object	提交人
+data.deleter	Object	删除人
+data.updater	Object	更新人
+data.createTime	DateTime	数据提交时间
+data.updateTime	DateTime	数据更新时间
+data.deleteTime	DateTime	数据删除时间
+data._id	String	
+data.flowState	String	流程状态，流程表才有，0表示处理中的节点，其它表示不在处理中
+请求示例：
+{
+    "data": {
+        "单行文本": "张三",
+        "多行文本": "webapi",
+        "数字": 8,
+        "日期时间": "2019-01-01 11:11:11",
+        "单选按钮组": "一年级",
+        "复选框组": [
+            "选项1",
+            "选项2"
+        ],
+        "下拉框": "女",
+        "下拉复选框": [
+            "选项1",
+            "选项2"
+        ],
+        "地址": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路"
+        },
+        "定位": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路",
+            "lnglatXY": [
+                112.99627,
+                28.19393
+            ]
+        },
+        "图片": [
+            {
+                "name": "123.jpg",
+                "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+            }
+        ],
+        "手写签名": [
+            {
+                "name": "签名.jpg",
+                "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+            }
+        ],
+        "子表单": [
+            {
+                "单行文本_子表单": "张三"
+            },
+            {
+                "单行文本_子表单": "张三"
+            }
+        ],
+        "成员单选": "5577ebc4504e8e77036d2a09",
+        "成员多选": [
+            "5577ebc4504e8e77036d2a09"
+        ],
+        "部门单选": "51d1177b964603db9e60a962",
+        "部门多选": [
+            "51d1177b964603db9e60a962"
+        ]
+    },
+    "is_start_workflow": true,
+    "is_start_event": false,
+    "operator": ""
+}
+响应数据样例：
+{
+    "data": {
+        "appId": "572177e6951f4dc54168c1eb",
+        "entryId": "5ebc5c2deee7ea61f7ac25df",
+        "creator": {
+            "name": "张三",
+            "_id": "5d66359813f33ef2e45916f2"
+        },
+        "deleter": null,
+        "updater": null,
+        "createTime": "2022-01-19 10:39:25",
+        "updateTime": "2022-01-19 10:39:25",
+        "deleteTime": "2022-01-19 10:39:25",
+        "_id": "590fadc6c57c564f8b55580e",
+        "flowState": "0",
+        "单行文本": "张三",
+        "多行文本": "webapi",
+        "数字": "8",
+        "日期时间": "2019-01-01 11:11:11",
+        "单选按钮组": "一年级",
+        "复选框组": [
+            "选项1",
+            "选项2"
+        ],
+        "下拉框": "女",
+        "下拉复选框": [
+            "选项1",
+            "选项2"
+        ],
+        "地址": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路"
+        },
+        "定位": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路",
+            "lnglatXY": [
+                112.99627,
+                28.19393
+            ]
+        },
+        "图片": [
+            {
+                "name": "123.jpg",
+                "size": 68065,
+                "mime": "image/jpeg",
+                "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+            }
+        ],
+        "附件": null,
+        "子表单": [
+            {
+                "单行文本_子表单": "张三"
+            },
+            {
+                "单行文本_子表单": "张三"
+            }
+        ],
+        "流水号": "00002",
+        "手写签名": [
+            {
+                "name": "bbysignature_1642573334281.png",
+                "size": "5311",
+                "mime": "image/png",
+                "url": "https://xxx.xxxxxx.com/FvcphmzkK_18fD2WFNbAQZDXyeR2"
+            }
+        ],
+        "成员单选": {
+            "name": "万和",
+            "_id": "5577ebc4504e8e77036d2a09"
+        },
+        "成员多选": [
+            {
+                "name": "万和",
+                "_id": "5577ebc4504e8e77036d2a09"
+            }
+        ],
+        "部门单选": {
+            "name": "人事部",
+            "_id": "51d1177b964603db9e60a962"
+        },
+        "部门多选": [
+            {
+                "name": "人事部",
+                "_id": "51d1177b964603db9e60a962"
+            }
+        ]
+    }
+}
+查询单条数据
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/data_retrieve
+点击复制
+
+根据指定数据ID查询表单中的数据
+请求参数：
+参数	必须	类型	说明
+data_id	是	String	数据id
+useUtcFormat	否	Boolean	时间返回值是否使用Utc格式
+返回参数：
+参数	类型	说明
+data	Object	返回数据内容，返回数据中字段名称用的是字段别名
+data.appId	String	应用id
+data.entryId	String	表单id
+data.creator	Object	提交人
+data.deleter	Object	删除人
+data.updater	Object	更新人
+data.createTime	DateTime	数据提交时间
+data.updateTime	DateTime	数据更新时间
+data.deleteTime	DateTime	数据删除时间
+data._id	String	
+data.flowState	String	流程状态，流程表才有 2表示流程手动结束 1表示流程已结束 0表示流程进行中
+请求示例：
+{
+    "data_id": "53240448e172bd9f00cd85ee"
+}
+响应数据样例：
+{
+    "data": {
+        "appId": "572177e6951f4dc54168c1eb",
+        "entryId": "5ebc5c2deee7ea61f7ac25df",
+        "creator": {
+            "name": "张三",
+            "_id": "5d66359813f33ef2e45916f2"
+        },
+        "deleter": null,
+        "updater": {
+            "name": "张三",
+            "_id": "5d66359813f33ef2e45916f2"
+        },
+        "createTime": "2022-01-19 11:46:53",
+        "updateTime": "2022-01-19 14:22:30",
+        "deleteTime": null,
+        "_id": "53240448e172bd9f00cd85ee",
+        "flowState": "0",
+        "单行文本": "张三",
+        "多行文本": "webapi",
+        "数字": "8",
+        "日期时间": "2019-01-01 00:00:00",
+        "单选按钮组": "一年级",
+        "复选框组": [
+            "选项1",
+            "选项2"
+        ],
+        "下拉框": "女",
+        "下拉复选框": [
+            "选项1",
+            "选项2"
+        ],
+        "地址": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路"
+        },
+        "定位": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路",
+            "lnglatXY": [
+                112.99627,
+                28.19393
+            ]
+        },
+        "图片": [
+            {
+                "name": "123.jpg",
+                "size": 68065,
+                "mime": "image/jpeg",
+                "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+            }
+        ],
+        "附件": [
+            {
+                "name": "新建文本文档.txt",
+                "size": "0",
+                "mime": "text/plain",
+                "url": "https://xxx.xxxxxx.com/Fto5o-5ea0sNMlW_75VgGJCv2AcJ"
+            }
+        ],
+        "子表单": [
+            {
+                "单行文本_子表单": "张三"
+            },
+            {
+                "单行文本_子表单": "张三"
+            }
+        ],
+        "流水号": "00009",
+        "手写签名": [
+            {
+                "name": "bbysignature_1642573334281.png",
+                "size": "5311",
+                "mime": "image/png",
+                "url": "https://xxx.xxxxxx.com/FvcphmzkK_18fD2WFNbAQZDXyeR2"
+            }
+        ],
+        "成员单选": {
+            "name": "万和",
+            "_id": "5577ebc4504e8e77036d2a09"
+        },
+        "成员多选": [
+            {
+                "name": "万和",
+                "_id": "5577ebc4504e8e77036d2a09"
+            }
+        ],
+        "部门单选": {
+            "name": "人事部",
+            "_id": "51d1177b964603db9e60a962"
+        },
+        "部门多选": [
+            {
+                "name": "人事部",
+                "_id": "51d1177b964603db9e60a962"
+            }
+        ]
+    }
+}
+查询多条数据
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/data
+点击复制
+
+根据数据筛选条件查询表单中的多条数据
+请求参数：
+参数	必须	类型	说明
+limit	否	Number	查询的数据条数，1~300，默认300
+skip	否	Number	翻页起始值索引
+fields	否	Array	需要查询的数据字段
+batch_id	否	String	webhook返回的数据修改batch_id,可查询对应的一组数据
+data_id	否	Array	需要查询的数据_id
+filter	否	Object	数据筛选器
+filter.rel	否	String	筛选组合关系，and或or
+filter.cond	否	Object	过滤条件列表
+filter.cond.field	否	String	字段别名
+filter.cond.method	否	String	过滤方法
+sort	否	Object	排序（asc：正序；desc：倒序），不限制排序字段的数量，复选框组、下拉复选框、地址、定位、图片、附件、手写签名、成员单选、成员多选、部门单选、部门多选不可作为排序字段
+sort._widget_1499052693182	否	String	
+sort._widget_1499052693195	否	String	
+useUtcFormat	否	Boolean	时间返回值是否使用Utc格式
+返回参数：
+参数	类型	说明
+data	Object	返回数据内容，返回数据中字段名称用的是字段别名
+data.appId	String	应用id
+data.entryId	String	表单id
+data._id	String	
+data.flowState	String	流程状态，该字段仅流程表单支持<br>2表示流程手动结束<br>1表示流程已结束<br>0表示流程进行中
+data.creator	Object	提交人
+请求示例：
+{
+    "limit": 300,
+    "skip": 0,
+    "fields": [
+        "_widget_1499052693182",
+        "_widget_1499052693195",
+        "_widget_1499052693206"
+    ],
+    "filter": {
+        "rel": "and",
+        "cond": [
+            {
+                "field": "_widget_1499052693182",
+                "method": "empty"
+            },
+            {
+                "field": "_widget_1499052693195",
+                "method": "not_empty"
+            },
+            {
+                "field": "_widget_1499052693206",
+                "method": "empty"
+            }
+        ]
+    },
+    "sort": {
+        "_widget_1499052693182": "desc",
+        "_widget_1499052693195": "asc"
+    }
+}
+响应数据样例：
+{
+    "data": [
+        {
+            "appId": "572177e6951f4dc54168c1eb",
+            "entryId": "5ebc5c2deee7ea61f7ac25df",
+            "creator": {
+                "name": "张三",
+                "_id": "5d66359813f33ef2e45916f2"
+            },
+            "deleter": null,
+            "updater": {
+                "name": "张三",
+                "_id": "5d66359813f33ef2e45916f2"
+            },
+            "createTime": "2022-01-19 11:46:53",
+            "updateTime": "2022-01-19 14:22:30",
+            "deleteTime": null,
+            "_id": "53240448e172bd9f00cd85ee",
+            "flowState": "0",
+            "单行文本": "张三",
+            "多行文本": "webapi",
+            "数字": "8",
+            "日期时间": "2019-01-01 00:00:00",
+            "单选按钮组": "一年级",
+            "复选框组": [
+                "选项1"
+            ],
+            "下拉框": "女",
+            "下拉复选框": [
+                "选项1"
+            ],
+            "地址": {
+                "province": "湖南省",
+                "city": "长沙市",
+                "district": "芙蓉区",
+                "detail": "韶山北路"
+            },
+            "定位": {
+                "province": "湖南省",
+                "city": "长沙市",
+                "district": "芙蓉区",
+                "detail": "韶山北路",
+                "lnglatXY": [
+                    112.99627
+                ]
+            },
+            "图片": [
+                {
+                    "name": "123.jpg",
+                    "size": 68065,
+                    "mime": "image/jpeg",
+                    "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+                }
+            ],
+            "附件": [
+                {
+                    "name": "新建文本文档.txt",
+                    "size": "0",
+                    "mime": "text/plain",
+                    "url": "https://xxx.xxxxxx.com/Fto5o-5ea0sNMlW_75VgGJCv2AcJ"
+                }
+            ],
+            "子表单": [
+                {
+                    "单行文本_子表单": "张三"
+                }
+            ],
+            "流水号": "00009",
+            "手写签名": [
+                {
+                    "name": "bbysignature_1642573334281.png",
+                    "size": "5311",
+                    "mime": "image/png",
+                    "url": "https://xxx.xxxxxx.com/FvcphmzkK_18fD2WFNbAQZDXyeR2"
+                }
+            ],
+            "成员单选": {
+                "name": "万和",
+                "_id": "5577ebc4504e8e77036d2a09"
+            },
+            "成员多选": [
+                {
+                    "name": "万和",
+                    "_id": "5577ebc4504e8e77036d2a09"
+                }
+            ],
+            "部门单选": {
+                "name": "人事部",
+                "_id": "51d1177b964603db9e60a962"
+            },
+            "部门多选": [
+                {
+                    "name": "人事部",
+                    "_id": "51d1177b964603db9e60a962"
+                }
+            ]
+        }
+    ]
+}
+编辑数据
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/data_update
+点击复制
+
+根据数据ID修改表单中的单条数据
+请求参数：
+参数	必须	类型	说明
+data_id	是	String	数据id
+data	否	Object	数据内容
+is_start_event	否	Boolean	是否触发事件（模块事件/_form事件/数据助手/前端事件）
+operator	否	String	操作人id，默认使用应用所有者的id
+useUtcFormat	否	Boolean	时间返回值是否使用Utc格式
+返回参数：
+参数	类型	说明
+data	Object	数据内容
+data.appId	String	应用id
+data.entryId	String	表单id
+data.creator	Object	提交人
+data.deleter	Object	删除人
+data.updater	Object	更新人
+data.createTime	DateTime	数据提交时间
+data.updateTime	DateTime	数据更新时间
+data.deleteTime	DateTime	数据删除时间
+data._id	String	
+data.flowState	String	流程状态，该字段仅流程表单支持<br>2表示流程手动结束<br>1表示流程已结束<br>0表示流程进行中
+请求示例：
+{
+    "data_id": "51ec5515b659f88c17ee4fb8",
+    "data": {
+        "单行文本": "张三",
+        "多行文本": "webapi",
+        "数字": 8,
+        "日期时间": "2019-01-01 11:11:11",
+        "单选按钮组": "一年级",
+        "复选框组": [
+            "选项1",
+            "选项2"
+        ],
+        "下拉框": "女",
+        "下拉复选框": [
+            "选项1",
+            "选项2"
+        ],
+        "地址": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路"
+        },
+        "定位": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路",
+            "lnglatXY": [
+                112.99627,
+                28.19393
+            ]
+        },
+        "图片": [
+            {
+                "name": "123.jpg",
+                "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+            }
+        ],
+        "子表单": [
+            {
+                "单行文本_子表单": "张三"
+            },
+            {
+                "单行文本_子表单": "张三"
+            }
+        ],
+        "成员单选": "5577ebc4504e8e77036d2a09",
+        "成员多选": [
+            "5577ebc4504e8e77036d2a09"
+        ],
+        "部门单选": "51d1177b964603db9e60a962",
+        "部门多选": [
+            "51d1177b964603db9e60a962"
+        ]
+    },
+    "is_start_event": false,
+    "operator": "57c38102d8e647dcee87befc"
+}
+响应数据样例：
+{
+    "data": {
+        "appId": "572177e6951f4dc54168c1eb",
+        "entryId": "5ebc5c2deee7ea61f7ac25df",
+        "creator": {
+            "name": "张三",
+            "_id": "5d66359813f33ef2e45916f2"
+        },
+        "deleter": {
+            "name": "王小美",
+            "_id": "57c38102d8e647dcee87befc"
+        },
+        "updater": {
+            "name": "王小美",
+            "_id": "57c38102d8e647dcee87befc"
+        },
+        "createTime": "2022-01-19 15:06:53",
+        "updateTime": "2022-01-19 15:34:50",
+        "deleteTime": "2022-01-19 15:30:55",
+        "_id": "51ec5515b659f88c17ee4fb8",
+        "flowState": null,
+        "单行文本": "张三",
+        "多行文本": "webapi",
+        "数字": "8",
+        "日期时间": "2019-01-01 11:11:11",
+        "单选按钮组": "一年级",
+        "复选框组": [
+            "选项1",
+            "选项2"
+        ],
+        "下拉框": "女",
+        "下拉复选框": [
+            "选项1",
+            "选项2"
+        ],
+        "地址": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路"
+        },
+        "定位": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路",
+            "lnglatXY": [
+                112.99627,
+                28.19393
+            ]
+        },
+        "图片": [
+            {
+                "name": "123.jpg",
+                "size": 68065,
+                "mime": "image/jpeg",
+                "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+            }
+        ],
+        "附件": null,
+        "子表单": [
+            {
+                "单行文本_子表单": "张三"
+            },
+            {
+                "单行文本_子表单": "张三"
+            }
+        ],
+        "流水号": "00011",
+        "手写签名": [
+            {
+                "name": "bbysignature_1642573334281.png",
+                "size": "5311",
+                "mime": "image/png",
+                "url": "https://xxx.xxxxxx.com/FvcphmzkK_18fD2WFNbAQZDXyeR2"
+            }
+        ],
+        "成员单选": {
+            "name": "万和",
+            "_id": "5577ebc4504e8e77036d2a09"
+        },
+        "成员多选": [
+            {
+                "name": "万和",
+                "_id": "5577ebc4504e8e77036d2a09"
+            }
+        ],
+        "部门单选": {
+            "name": "人事部",
+            "_id": "51d1177b964603db9e60a962"
+        },
+        "部门多选": [
+            {
+                "name": "人事部",
+                "_id": "51d1177b964603db9e60a962"
+            }
+        ]
+    }
+}
+删除数据
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/data_delete
+点击复制
+
+根据数据ID删除表单中的单条数据，删除的数据进入回收站
+请求参数：
+参数	必须	类型	说明
+data_id	是	String	数据id
+is_start_event	是		是否触发事件（模块事件/_form事件/数据助手/前端事件）
+operator	是	String	操作人id，默认使用应用所有者的id
+返回参数：无
+请求示例：
+{
+    "data_id": "51ec5515b659f88c17ee4fb8",
+    "is_start_event": false,
+    "operator": "57c38102d8e647dcee87befc"
+}
+响应数据样例：
+{
+    "code": 200,
+    "msg": "成功"
+}
+批量新增数据
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/batch_data_create
+点击复制
+
+在指定表单中添加多条数据（300条以内）
+另外，系统字段 和 以下所列举的字段不支持添加和修改数据：
+* 分割线
+* 附件、手写签名
+* 关联数据、关联查询
+请求参数：
+参数	必须	类型	说明
+datas	是	Object	数据内容
+is_start_workflow	否	Boolean	用来控制是否触发流程，默认不触发流程
+is_start_event	否	Boolean	是否触发事件（模块事件/_form事件/数据助手/前端事件）
+operator	否	String	操作人id，默认使用应用所有者的id
+useUtcFormat	否	Boolean	时间返回值是否使用Utc格式
+返回参数：
+参数	类型	说明
+success	Object	成功响应数据
+success.appId	String	应用id
+success.entryId	String	表单id
+success.creator	Object	提交人
+success.deleter	Object	删除人
+success.updater	Object	修改人
+createTime	DateTime	提交时间
+updateTime	DateTime	更新时间
+success.deleteTime	DateTime	删除时间
+success._id	String	
+success.flowState	String	该字段仅流程表单支持。<br>2表示流程手动结束<br>1表示流程已结束<br>0表示流程进行中
+failed	Object	失败的原数据
+failedCode	Object	失败对应的错误码code
+请求示例：
+{
+    "datas": [
+        {
+            "单行文本": "张三",
+            "多行文本": "webapi",
+            "数字": 8,
+            "日期时间": "2019-01-01 11:11:11",
+            "单选按钮组": "一年级",
+            "复选框组": [
+                "选项1",
+                "选项2"
+            ],
+            "下拉框": "女",
+            "下拉复选框": [
+                "选项1",
+                "选项2"
+            ],
+            "地址": {
+                "province": "湖南省",
+                "city": "长沙市",
+                "district": "芙蓉区",
+                "detail": "韶山北路"
+            },
+            "定位": {
+                "province": "湖南省",
+                "city": "长沙市",
+                "district": "芙蓉区",
+                "detail": "韶山北路",
+                "lnglatXY": [
+                    112.99627,
+                    28.19393
+                ]
+            },
+            "图片": [
+                {
+                    "name": "123.jpg",
+                    "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+                }
+            ],
+            "子表单": [
+                {
+                    "单行文本_子表单": "张三"
+                },
+                {
+                    "单行文本_子表单": "张三"
+                }
+            ],
+            "成员单选": "5577ebc4504e8e77036d2a09",
+            "成员多选": [
+                "5577ebc4504e8e77036d2a09"
+            ],
+            "部门单选": "51d1177b964603db9e60a962",
+            "部门多选": [
+                "51d1177b964603db9e60a962"
+            ]
+        },
+        {
+            "单行文本": "新建数据2"
+        },
+        {
+            "单行文本": "新建数据3",
+            "图片": [
+                {
+                    "name": "123.jpg",
+                    "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+                }
+            ]
+        }
+    ],
+    "is_start_workflow": false,
+    "is_start_event": false,
+    "operator": "5043f034699af3458734f91c"
+}
+响应数据样例：
+{
+    "success": [
+        {
+            "appId": "572177e6951f4dc54168c1eb",
+            "entryId": "5ebc5c2deee7ea61f7ac25df",
+            "creator": {
+                "name": "模块工程师",
+                "_id": "5d66359813f33ef2e45916f2"
+            },
+            "deleter": null,
+            "updater": null,
+            "createTime": "2022-01-19 16:03:16",
+            "updateTime": "2022-01-19 16:03:16",
+            "deleteTime": null,
+            "_id": "5e9d45374789ddac30b488e9",
+            "flowState": null,
+            "单行文本": "张三",
+            "多行文本": "webapi",
+            "数字": "8",
+            "日期时间": "2019-01-01 11:11:11",
+            "单选按钮组": "一年级",
+            "复选框组": [
+                "选项1"
+            ],
+            "下拉框": "女",
+            "下拉复选框": [
+                "选项1"
+            ],
+            "地址": {
+                "province": "湖南省",
+                "city": "长沙市",
+                "district": "芙蓉区",
+                "detail": "韶山北路"
+            },
+            "定位": {
+                "province": "湖南省",
+                "city": "长沙市",
+                "district": "芙蓉区",
+                "detail": "韶山北路",
+                "lnglatXY": [
+                    112.99627
+                ]
+            },
+            "图片": [
+                {
+                    "name": "123.jpg",
+                    "size": 68065,
+                    "mime": "image/jpeg",
+                    "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+                }
+            ],
+            "附件": null,
+            "子表单": [
+                {
+                    "单行文本_子表单": "张三"
+                }
+            ],
+            "流水号": "00022",
+            "手写签名": [
+                {
+                    "name": "bbysignature_1642573334281.png",
+                    "size": "5311",
+                    "mime": "image/png",
+                    "url": "https://xxx.xxxxxx.com/FvcphmzkK_18fD2WFNbAQZDXyeR2"
+                }
+            ],
+            "成员单选": {
+                "name": "万和",
+                "_id": "5577ebc4504e8e77036d2a09"
+            },
+            "成员多选": [
+                {
+                    "name": "万和",
+                    "_id": "5577ebc4504e8e77036d2a09"
+                }
+            ],
+            "部门单选": {
+                "name": "人事部",
+                "_id": "51d1177b964603db9e60a962"
+            },
+            "部门多选": [
+                {
+                    "name": "人事部",
+                    "_id": "51d1177b964603db9e60a962"
+                }
+            ]
+        }
+    ],
+    "failed": [],
+    "failedCode": []
+}
+查询数据总数
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/data_count
+点击复制
+
+根据数据筛选条件查询符合条件数据总数
+请求参数：
+参数	必须	类型	说明
+filter	否	Object	数据筛选器,不填查所有
+filter.rel	否	String	筛选组合关系，and或or
+filter.cond	否	Array	过滤条件列表
+filter.cond.field	否	String	字段名
+filter.cond.method	否	String	过滤方法
+filter.cond.value	否	Array	过滤值
+返回参数：
+参数	类型	说明
+count	Number	数据条数
+请求示例：
+{
+    "filter": {
+        "rel": "and",
+        "cond": [
+            {
+                "field": "单行文本",
+                "method": "eq",
+                "value": [
+                    "1"
+                ]
+            },
+            {
+                "field": "_widget_1499052693195",
+                "method": "not_empty"
+            },
+            {
+                "field": "_widget_1499052693206",
+                "method": "empty"
+            }
+        ]
+    }
+}
+响应数据样例：
+{
+    "count": 0
+}
+批量修改数据
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/data_batch_update
+点击复制
+
+根据数据筛选条件批量修改某个字段值
+请求参数：
+参数	必须	类型	说明
+filter	否	Object	数据筛选器,不填查所有
+filter.rel	否	String	筛选组合关系，and或or
+filter.cond	否	Object	过滤条件列表
+filter.cond.field	否	String	字段名
+filter.cond.method	否	String	过滤方法
+filter.cond.value	否	Array	过滤值
+idList	否	Array	批量修改数据id列表和筛选条件属于and关系
+field	是	String	字段别名
+value	是	String	字段值
+返回参数：
+参数	类型	说明
+total	Number	符合条件总条数
+success	Number	修改成功条数
+fail	Number	修改失败条数
+请求示例：
+{
+    "filter": {
+        "rel": "and",
+        "cond": [
+            {
+                "field": "单行文本",
+                "method": "eq",
+                "value": [
+                    "张三"
+                ]
+            }
+        ]
+    },
+    "idList": [],
+    "field": "单行文本",
+    "value": "批量修改"
+}
+响应数据样例：
+{
+    "total": 21,
+    "success": 21,
+    "fail": 0
+}

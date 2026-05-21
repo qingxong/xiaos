@@ -1,0 +1,17 @@
+{
+  "name": "xiaos-tidan-bot",
+  "version": "1.0.0",
+  "description": "企业微信提单机器人 - 最小回调服务",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
