@@ -73,6 +73,14 @@ POST 回调支持智能机器人 **JSON** 格式：`{"tousername":"...","encrypt
 
 环境变量：`API_KEY`（必填），可选 `OA_DEFAULT_*`、`OA_START_WORKFLOW`。
 
+业务选项来自 `业务名称` 文件，生成配置：
+
+```bash
+npm run build:oa-options
+```
+
+产出 `config/oa-options.json`（256 项业务名称）。提单前会校验业务名称/客户类型/发起公司；支持口语别名（如 记账→代账续费）。
+
 ## 环境变量
 
 见 `.env.example`。必填：`WECOM_TOKEN`、`WECOM_ENCODING_AES_KEY`。可选：`WECOM_CORP_ID`（企业 ID；若 URL 校验仍失败，在企微管理后台查看企业 ID 填入）。

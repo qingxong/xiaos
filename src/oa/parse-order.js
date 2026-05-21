@@ -1,13 +1,7 @@
 /**
- * 解析企微文本为提单字段（最小格式，后续可换 LLM）
- *
- * 示例：
- * 提单
- * 客户姓名：张三
- * 客户电话：13800138000
- * 标的企业：某某公司
- * 业务名称：注册
+ * 解析企微文本为提单字段
  */
+const { validateAndNormalize, formatOptionsHelp } = require("./validate");
 
 const KEY_ALIASES = {
   客户姓名: "customerName",
@@ -54,7 +48,6 @@ function parseOrderText(text) {
     if (field && value) order[field] = value;
   }
 
-  // 兜底：首行「提单」后若只有一行口语，尝试提取手机号
   const phoneMatch = text.match(/1[3-9]\d{9}/);
   if (phoneMatch && !order.customerPhone) {
     order.customerPhone = phoneMatch[0];
@@ -72,25 +65,21 @@ function getMissingRequired(order) {
   return missing;
 }
 
-const HELP_TEXT = `**提单格式**（每行一项，复制后修改发送）：
+function buildHelpText() {
+  return (
+    `**提单格式**（每行一项）：\n\n` +
+    `\`\`\`\n提单\n客户姓名：张三\n客户电话：13800138000\n标的企业：某某有限公司\n业务名称：海口有限公司注册\n客户类型：直客\n发起公司：海南智汇创业园有限公司\n\`\`\`\n\n` +
+    formatOptionsHelp()
+  );
+}
 
-\`\`\`
-提单
-客户姓名：张三
-客户电话：13800138000
-标的企业：某某有限公司
-业务名称：（与OA下拉选项完全一致）
-群名称：选填
-客户类型：选填
-发起公司：选填
-销售负责人：选填（OA成员ID）
-\`\`\`
-
-发送后以「提单」开头的消息会自动写入 OA。`;
+const HELP_TEXT = buildHelpText();
 
 module.exports = {
   isOrderIntent,
   parseOrderText,
   getMissingRequired,
+  validateAndNormalize,
   HELP_TEXT,
+  buildHelpText,
 };

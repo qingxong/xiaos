@@ -1093,3 +1093,1440 @@ fail	Number	修改失败条数
     "success": 21,
     "fail": 0
 }
+批量删除数据
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/data_batch_delete
+点击复制
+
+根据数据筛选条件批量删除表单中的数据，删除的数据进入数据回收站
+请求参数：
+参数	必须	类型	说明
+filter	否	Object	数据筛选器,不填查所有
+filter.rel	否	String	筛选组合关系，and或or
+filter.cond	否	Array	过滤条件列表
+filter.cond.field	否	String	字段名
+filter.cond.method	否	String	过滤方法
+filter.cond.value	否	String	过滤值
+idList	否	Array	批量删除数据id列表和筛选条件属于and关系，filter和idList选填一个
+返回参数：无
+请求示例：
+{
+    "filter": {
+        "rel": "and",
+        "cond": [
+            {
+                "field": "多行文本",
+                "method": "eq",
+                "value": [
+                    "webapi"
+                ]
+            }
+        ]
+    },
+    "idList": []
+}
+响应数据样例：
+{
+    "code": 200,
+    "msg": "成功"
+}
+新增唯一数据
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/unique_create
+点击复制
+
+根据指定的字段在指定表单新增一条数据，当指定字段的值已经存在的时候，不进行新增，并返回已经存在的数据的ID
+请求参数：
+参数	必须	类型	说明
+data	是	Object	数据内容
+is_start_workflow	否	Boolean	用来控制是否触发流程，默认不触发流程
+is_start_event	否	Boolean	是否触发事件（模块事件/_form事件/数据助手/前端事件）
+operator	否	String	操作人id，默认使用应用所有者的id
+unique	是	Array	唯一字段，可以是多个字段 必须是以下类型控件：单行文本、多行文本，数字，日期, 下拉框，成员单选，部门单选，单选按钮组
+useUtcFormat	否	Boolean	时间返回值是否使用Utc格式
+返回参数：
+参数	类型	说明
+data	Object	返回数据内容，返回数据中字段名称用的是字段别名
+data.status	Number	状态 0失败，1成功
+data.data_id	Array	成功时返回成功数据的id，失败时返回已存在数据的id
+data.error_code	Number	错误码，成功时 0
+data.error_message	String	错误详情，成功时ok
+请求示例：
+{
+    "data": {
+        "单行文本": "张三",
+        "多行文本": "webapi",
+        "数字": 8,
+        "日期时间": "2019-01-01 11:11:11",
+        "单选按钮组": "一年级",
+        "复选框组": [
+            "选项1",
+            "选项2"
+        ],
+        "下拉框": "女",
+        "下拉复选框": [
+            "选项1",
+            "选项2"
+        ],
+        "地址": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路"
+        },
+        "定位": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路",
+            "lnglatXY": [
+                112.99627,
+                28.19393
+            ]
+        },
+        "图片": [
+            {
+                "name": "123.jpg",
+                "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+            }
+        ],
+        "子表单": [
+            {
+                "单行文本_子表单": "张三"
+            },
+            {
+                "单行文本_子表单": "张三"
+            }
+        ],
+        "成员单选": "5577ebc4504e8e77036d2a09",
+        "成员多选": [
+            "5577ebc4504e8e77036d2a09"
+        ],
+        "部门单选": "51d1177b964603db9e60a962",
+        "部门多选": [
+            "51d1177b964603db9e60a962"
+        ]
+    },
+    "is_start_workflow": false,
+    "is_start_event": true,
+    "operator": "5466ebe918a90c64c26fcc67",
+    "unique": [
+        "单行文本"
+    ]
+}
+响应数据样例：
+{
+    "data": {
+        "status": 1,
+        "data_id": [
+            "5cea2fc4e60659a5fb48cf9d"
+        ],
+        "error_code": 0,
+        "error_message": "ok"
+    }
+}
+新增多条唯一数据
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/batch_unique_create
+点击复制
+
+根据指定的字段在指定表单新增多条数据，当指定字段的值已经存在的时候，不进行新增，并返回已经存在的数据的ID
+请求参数：
+参数	必须	类型	说明
+datas	是	Object	多条数据内容
+is_start_workflow	否	Boolean	用来控制是否触发流程，默认不触发流程
+is_start_event	否	Boolean	是否触发事件（模块事件/_form事件/数据助手/前端事件）
+operator	否	String	操作人id，默认使用应用所有者的id
+unique	是	Array	唯一字段，可以是多个字段 必须是以下类型控件：单行文本、多行文本，数字，日期, 下拉框，成员单选，部门单选，单选按钮组
+返回参数：
+参数	类型	说明
+data	Array	返回数据内容，返回数据中字段名称用的是字段别名
+data.status	Number	状态 0失败，1成功
+data.data_id	Array	成功时返回成功数据的id，失败时返回已存在数据的id
+data.error_code	Number	错误码，成功时 0
+data.error_message	String	错误详情，成功时ok
+请求示例：
+{
+    "datas": [
+        {
+            "单行文本": "张三",
+            "多行文本": "webapi",
+            "数字": 8,
+            "日期时间": "2019-01-01 11:11:11",
+            "单选按钮组": "一年级",
+            "复选框组": [
+                "选项1",
+                "选项2"
+            ],
+            "下拉框": "女",
+            "下拉复选框": [
+                "选项1",
+                "选项2"
+            ],
+            "地址": {
+                "province": "湖南省",
+                "city": "长沙市",
+                "district": "芙蓉区",
+                "detail": "韶山北路"
+            },
+            "定位": {
+                "province": "湖南省",
+                "city": "长沙市",
+                "district": "芙蓉区",
+                "detail": "韶山北路",
+                "lnglatXY": [
+                    112.99627,
+                    28.19393
+                ]
+            },
+            "图片": [
+                {
+                    "name": "123.jpg",
+                    "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+                }
+            ],
+            "子表单": [
+                {
+                    "单行文本_子表单": "张三"
+                },
+                {
+                    "单行文本_子表单": "张三"
+                }
+            ],
+            "成员单选": "5577ebc4504e8e77036d2a09",
+            "成员多选": [
+                "5577ebc4504e8e77036d2a09"
+            ],
+            "部门单选": "51d1177b964603db9e60a962",
+            "部门多选": [
+                "51d1177b964603db9e60a962"
+            ]
+        }
+    ],
+    "is_start_workflow": false,
+    "is_start_event": true,
+    "operator": "5466ebe918a90c64c26fcc67",
+    "unique": [
+        "单行文本"
+    ]
+}
+响应数据样例：
+{
+    "data": [
+        {
+            "status": 1,
+            "data_id": [
+                "5429f2cdd0c1fa984e1fe6d8"
+            ],
+            "error_code": 0,
+            "error_message": "ok"
+        },
+        {
+            "status": 1,
+            "data_id": [
+                "55e74350506aa92130a85289"
+            ],
+            "error_code": 0,
+            "error_message": "ok"
+        }
+    ]
+}
+查询成员控件配置信息
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/member_widget_info
+点击复制
+
+查询互联企业角色列表
+请求参数：
+参数	必须	类型	说明
+widget	是	String	成员字段别名
+返回参数：
+参数	类型	说明
+widget	String	字段原始别名
+name	String	字段别名
+type	String	字段类型
+title	String	字段标题
+limit	Object	可选范围参数内容
+limit.users	Array	成员id
+limit.outsiderMember	Array	外部联系人id
+limit.outsiderGroup	Array	外部联系人分组id
+limit.dockcorpValue	Array	互联组织部门id
+limit.dockuserValue	Array	互联组织对接人id
+limit.dockroleValue	Array	互联组织角色id
+limit.departs	Array	部门id 部门id-dept：当前部门， 部门id-deptSub：当前部门及其子部门
+limit.roles	Array	角色id
+limit.public	Array	动态参数 100000000000000000000001表示当前用户
+limit.jobtitle	Array	职位 部门id-current-职位名称：当前部门职位，部门id-currentSub-职位名称：当前部门及其子部门的职位
+value	Array	成员字段默认值
+请求示例：
+{
+    "widget": "_widget_1700038939022"
+}
+响应数据样例：
+{
+    "widget": "_widget_1700038939022",
+    "name": "_widget_1700038939022",
+    "type": "user",
+    "title": "成员单选",
+    "limit": {
+        "users": [
+            "5c06e86f11f87c94fb1c24ee",
+            "52b837e2e2ec5736831db555"
+        ],
+        "outsiderMember": [
+            "5a70ee08a0416de96518a811",
+            "5043f034699af3458734f91c"
+        ],
+        "outsiderGroup": [
+            "088391f780542c879e911697",
+            "4e414053658c58d253a26c49"
+        ],
+        "dockcorpValue": [
+            "cli_a1657573547a900d",
+            "wpacI8DQAA0nJ3fAlIOudx08pcqReL0g"
+        ],
+        "dockuserValue": [
+            "b42ee027a157d4f2c0f06429",
+            "1043b8d2b9cf2456acd144e0"
+        ],
+        "dockroleValue": [
+            "332947b70c437a1990f5ce5e"
+        ],
+        "departs": [
+            "5f0d7cf9f4361283774fcac4-dept",
+            "5f0d7cf9f4361283774fcac4-deptSub"
+        ],
+        "roles": [
+            "5d255365c73435619b72fcb0",
+            "5d7664098c0e0bb8e9f4e0b8",
+            "0a74a89bfd16dbc56b178166"
+        ],
+        "public": [
+            "100000000000000000000001"
+        ],
+        "jobtitle": [
+            "57692aedbb6039b04cf15eca-current-2",
+            "57692aedbb6039b04cf15eca-currentSub-2"
+        ]
+    },
+    "value": [
+        "b42ee027a157d4f2c0f06429"
+    ]
+}
+查询部门控件配置信息
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/dept_widget_info
+点击复制
+
+查询互联企业角色列表
+请求参数：
+参数	必须	类型	说明
+widget	是	String	部门字段别名
+返回参数：
+参数	类型	说明
+widget	String	字段原始别名
+name	String	字段别名
+type	String	字段类型
+title	String	字段标题
+limit	Object	可选范围参数内容
+limit.departs	Array	部门id 部门id-dept：当前部门， 部门id-deptSub：当前部门及其子部门
+limit.dockcorpValue	Array	互联组织部门id
+limit.outsiderGroup	Array	外部联系人分组id
+limit.public	Array	动态参数 100000000000000000000001表示当前用户
+value	Array	成员字段默认值
+请求示例：
+{
+    "widget": "_widget_1700125042859"
+}
+响应数据样例：
+{
+    "widget": "_widget_1700125042859",
+    "name": "_widget_1700125042859",
+    "type": "dept",
+    "title": "部门单选",
+    "limit": {
+        "departs": [
+            "5f0d7cf9f4361283774fcac4-dept",
+            "5f0d7cf9f4361283774fcac4-deptSub"
+        ],
+        "dockcorpValue": [
+            "cli_a1657573547a900d",
+            "wpacI8DQAA0nJ3fAlIOudx08pcqReL0g"
+        ],
+        "outsiderGroup": [
+            "088391f780542c879e911697",
+            "4e414053658c58d253a26c49"
+        ],
+        "public": [
+            "110000000000000000000002"
+        ]
+    },
+    "value": [
+        "5add5775c8694f5863342840"
+    ]
+}
+修改成员控件
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/member_widget_update
+点击复制
+
+修改成员控件
+请求参数：
+参数	必须	类型	说明
+widget	是	String	字段别名
+limit	否	Object	可选范围参数内容
+limit.departs	否	Array	部门id 部门id-dept：当前部门， 部门id-deptSub：当前部门及其子部门
+limit.dockcorpValue	否	Array	互联组织部门id
+limit.dockroleValue	否	Array	互联组织角色id
+limit.users	否	Array	成员id
+limit.dockuserValue	否	Array	互联组织对接人id
+limit.jobtitle	否	Array	职位 部门id-current-职位名称：当前部门职位，部门id-currentSub-职位名称：当前部门及其子部门的职位
+limit.outsiderMember	否	Array	外部联系人id
+limit.outsiderGroup	否	Array	外部联系人分组id
+limit.roles	否	Array	角色id
+limit.public	否	Array	动态参数 100000000000000000000001表示当前用户
+value	否	Array	成员字段默认值
+返回参数：
+参数	类型	说明
+code	Number	状态码
+msg	String	描述
+请求示例：
+{
+    "widget": "_widget_1700038939022",
+    "limit": {
+        "departs": [
+            "5f0d7cf9f4361283774fcac4-dept",
+            "5f0d7cf9f4361283774fcac4-deptSub"
+        ],
+        "dockcorpValue": [
+            "cli_a1657573547a900d",
+            "wpacI8DQAA0nJ3fAlIOudx08pcqReL0g"
+        ],
+        "dockroleValue": [
+            "0a74a89bfd16dbc56b178166",
+            "332947b70c437a1990f5ce5e"
+        ],
+        "users": [
+            "5c06e86f11f87c94fb1c24ee",
+            "52b837e2e2ec5736831db555"
+        ],
+        "dockuserValue": [
+            "b42ee027a157d4f2c0f06429",
+            "1043b8d2b9cf2456acd144e0"
+        ],
+        "jobtitle": [
+            "57692aedbb6039b04cf15eca-current-2",
+            "57692aedbb6039b04cf15eca-currentSub-2"
+        ],
+        "outsiderMember": [
+            "5a70ee08a0416de96518a811",
+            "5043f034699af3458734f91c"
+        ],
+        "outsiderGroup": [
+            "088391f780542c879e911697",
+            "4e414053658c58d253a26c49"
+        ],
+        "roles": [
+            "5d255365c73435619b72fcb0",
+            "5d7664098c0e0bb8e9f4e0b8"
+        ],
+        "public": [
+            "100000000000000000000001"
+        ]
+    },
+    "value": [
+        "b42ee027a157d4f2c0f06429"
+    ]
+}
+响应数据样例：
+{
+    "code": 200,
+    "msg": "成功"
+}
+修改部门控件
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/dept_widget_update
+点击复制
+
+修改部门控件
+请求参数：
+参数	必须	类型	说明
+widget	是	String	字段别名
+limit	否	Object	可选范围参数内容
+limit.departs	否	Array	部门id 部门id-dept：当前部门， 部门id-deptSub：当前部门及其子部门
+limit.dockcorpValue	否	Array	互联组织部门id
+limit.outsiderGroup	否	Array	外部联系人分组id
+limit.public	否	Array	动态参数，110000000000000000000001表示当前用户所处部门，110000000000000000000002当前用户所处部门以及子部门
+value	否	Array	部门字段默认值
+返回参数：
+参数	类型	说明
+code	Number	状态码
+msg	String	描述
+请求示例：
+{
+    "widget": "_widget_1699427331657",
+    "limit": {
+        "departs": [
+            "5f0d7cf9f4361283774fcac4-dept",
+            "5f0d7cf9f4361283774fcac4-deptSub"
+        ],
+        "dockcorpValue": [
+            "cli_a1657573547a900d",
+            "wpacI8DQAA0nJ3fAlIOudx08pcqReL0g"
+        ],
+        "outsiderGroup": [
+            "088391f780542c879e911697",
+            "4e414053658c58d253a26c49"
+        ],
+        "public": [
+            "110000000000000000000001",
+            "110000000000000000000002"
+        ]
+    },
+    "value": [
+        "5add5775c8694f5863342840"
+    ]
+}
+响应数据样例：
+{
+    "code": 200,
+    "msg": "成功"
+}
+发起流程
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/flow_start
+点击复制
+
+在指定流程表单中发起一个流程
+另外，系统字段 和 以下所列举的字段不支持添加和修改数据：
+* 分割线
+* 附件、手写签名
+* 关联数据、关联查询
+请求参数：
+参数	必须	类型	说明
+values	是	Object	数据内容
+flowCreator	否	String	发起人
+返回参数：
+参数	类型	说明
+dataId	String	数据id
+请求示例：
+{
+    "values": {
+        "单行文本": "张三",
+        "多行文本": "webapi",
+        "数字": 8,
+        "日期时间": "2019-01-01 11:11:11",
+        "单选按钮组": "一年级",
+        "复选框组": [
+            "选项1",
+            "选项2"
+        ],
+        "下拉框": "女",
+        "下拉复选框": [
+            "选项1",
+            "选项2"
+        ],
+        "地址": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路"
+        },
+        "定位": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路",
+            "lnglatXY": [
+                112.99627,
+                28.19393
+            ]
+        },
+        "图片": [
+            {
+                "name": "123.jpg",
+                "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+            }
+        ],
+        "子表单": [
+            {
+                "单行文本_子表单": "张三",
+                "复选框组_子表单": [
+                    "选项1",
+                    "选项2"
+                ],
+                "图片_子表单": [
+                    {
+                        "name": "123.jpg",
+                        "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+                    }
+                ]
+            },
+            {
+                "单行文本_子表单": "张三"
+            }
+        ],
+        "成员单选": "5577ebc4504e8e77036d2a09",
+        "成员多选": [
+            "5577ebc4504e8e77036d2a09"
+        ],
+        "部门单选": "51d1177b964603db9e60a962",
+        "部门多选": [
+            "51d1177b964603db9e60a962"
+        ]
+    },
+    "flowCreator": "5d66359813f33ef2e45916f2"
+}
+响应数据样例：
+{
+    "dataId": "517a285739f4f6f0d33d01f9"
+}
+结束流程
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/flow_close
+点击复制
+
+根据流程数据ID结束指定流程
+请求参数：
+参数	必须	类型	说明
+dataId	是	String	数据id
+operator	否	String	操作人id，默认使用应用所有者的id
+返回参数：无
+请求示例：
+{
+    "dataId": "50601227e945483426d13f47",
+    "operator": "5d66359813f33ef2e45916f2"
+}
+响应数据样例：
+{
+    "code": 200,
+    "msg": "成功"
+}
+流程修改
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/flow_update
+点击复制
+
+根据流程数据ID操作修改指定流程
+请求参数：
+参数	必须	类型	说明
+requiredValidation	否	Boolean	是否验证字段必填项，默认false
+dataId	是	String	流程数据id
+operator	是	String	操作人，必须是当前流程数据节点负责人
+flowId	是	Number	流程节点id
+flowAction	是	String	流程操作，forward（提交流程） save（暂存） close （结束）transfer（转交） back（回退）
+backFlowId	否	Number	回退节点，回退指定节点时必填，流程设置为回退上一节点时可不填
+candidateId	否	String	转交人，转交时必填
+values	是	Object	流程表单提交修改数据内容
+返回参数：无
+请求示例：
+{
+    "requiredValidation": false,
+    "dataId": "53e29dabada7c0e4d5a8145d",
+    "operator": "5577ebc4504e8e77036d2a09",
+    "flowId": 3,
+    "flowAction": "forward",
+    "backFlowId": 3,
+    "candidateId": "5d66359813f33ef2e45916f2",
+    "values": {
+        "单行文本": "11",
+        "多行文本": "webapi",
+        "数字": 9,
+        "日期时间": "2019-01-01 11:11:11",
+        "单选按钮组": "一年级",
+        "复选框组": [
+            "选项1",
+            "选项2"
+        ],
+        "下拉框": "女",
+        "下拉复选框": [
+            "选项1",
+            "选项2"
+        ],
+        "地址": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路"
+        },
+        "定位": {
+            "province": "湖南省",
+            "city": "长沙市",
+            "district": "芙蓉区",
+            "detail": "韶山北路",
+            "lnglatXY": [
+                112.99627,
+                28.19393
+            ]
+        },
+        "图片": [
+            {
+                "name": "123.jpg",
+                "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+            }
+        ],
+        "子表单": [
+            {
+                "单行文本_子表单": "张三",
+                "复选框组_子表单": [
+                    "选项1",
+                    "选项2"
+                ],
+                "图片_子表单": [
+                    {
+                        "name": "123.jpg",
+                        "url": "https://xxx.xxxxxx.com/FvNMG4BF9LEsbSv3HaO5gA9U0rQz"
+                    }
+                ]
+            },
+            {
+                "单行文本_子表单": "张三"
+            }
+        ],
+        "成员单选": "5577ebc4504e8e77036d2a09",
+        "成员多选": [
+            "5577ebc4504e8e77036d2a09"
+        ],
+        "部门单选": "51d1177b964603db9e60a962",
+        "部门多选": [
+            "51d1177b964603db9e60a962"
+        ]
+    }
+}
+响应数据样例：
+{
+    "code": 200,
+    "msg": "成功"
+}
+流程催办
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/flow_urge
+点击复制
+
+根据流程数据ID发起流程催办
+请求参数：
+参数	必须	类型	说明
+dataId	是	String	流程数据id
+flowId	是	Number	流程节点id
+返回参数：无
+请求示例：
+{
+    "dataId": "58867e3f59e33ec14b57aa2b",
+    "flowId": 1
+}
+响应数据样例：
+{
+    "code": 200,
+    "msg": "成功"
+}
+批量结束流程
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/flow_batch_close
+点击复制
+
+根据流程数据ID列表批量结束流程（300条以内）
+请求参数：
+参数	必须	类型	说明
+idList	是	Array	要结束的流程数据id集合
+返回参数：
+参数	类型	说明
+fail	Number	失败条数
+success	Number	成功条数
+total	Number	总条数
+请求示例：
+{
+    "idList": [
+        "5ec1f037217021b07166a8ee",
+        "58867e3f59e33ec14b57aa2b"
+    ]
+}
+响应数据样例：
+{
+    "fail": 0,
+    "success": 1,
+    "total": 1
+}
+获取流程操作日志
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/flow_log
+点击复制
+
+根据流程数据ID查询流程操作日志
+请求参数：
+参数	必须	类型	说明
+dataId	是	Number	流程数据id
+返回参数：
+参数	类型	说明
+flowId	Number	流程节点id
+flowName	String	节点名称
+flowAction	String	流程操作，forward（提交流程） save（暂存） close （结束）transfer（转交） back（回退）
+flowActionName	String	操作名称
+operator	String	操作人，必须是当前流程数据节点负责人
+createTime	DateTime	开始时间
+updateTime	DateTime	结束时间
+flowTarget	Number	下个流转节点id
+请求示例：
+{
+    "dataId": "5c9a62f7843cbef5cf31e13d"
+}
+响应数据样例：
+[
+    {
+        "flowId": 2,
+        "flowName": "流程节点1",
+        "flowAction": "forward",
+        "flowActionName": "提交",
+        "operator": "张三",
+        "createTime": "2022-01-20 14:56:08",
+        "updateTime": "2022-01-20 14:56:30",
+        "flowTarget": [
+            1
+        ]
+    }
+]
+查询流程信息
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/flow_info
+点击复制
+
+根据流程数据ID查询流程信息
+请求参数：
+参数	必须	类型	说明
+dataId	是	String	流程数据id
+返回参数：
+参数	类型	说明
+creator	Object	创建人
+creator.user_id	String	创建成员id
+creator.name	String	名称
+updater	Object	更新人
+createTime	DateTime	提交时间
+updateTime	DateTime	更新时间
+flowVer	String	流程版本
+flowState	Number	流程状态
+chargers	Array	节点负责人
+ccUsers	Array	节点抄送人
+flowDecision	Object	流程决策
+node	Object	节点信息
+node.alias	String	节点别名
+node.flowId	Number	节点id
+node.flowName	String	节点名称
+请求示例：
+{
+    "dataId": "580d608a48c93f3338c48e4e"
+}
+响应数据样例：
+{
+    "creator": {
+        "user_id": "5043f034699af3458734f91c",
+        "name": "李四"
+    },
+    "updater": "李四",
+    "createTime": "2022-01-19 19:48:48",
+    "updateTime": "2022-01-20 10:10:10",
+    "flowVer": "1",
+    "flowState": 0,
+    "chargers": [
+        "5577ebc4504e8e77036d2a09"
+    ],
+    "ccUsers": [],
+    "flowDecision": [],
+    "单行文本": "张三",
+    "多行文本": "webapi",
+    "数字": "8",
+    "日期时间": 1546272000000,
+    "单选按钮组": "一年级",
+    "复选框组": [
+        "选项1",
+        "选项4"
+    ],
+    "下拉框": "女",
+    "下拉复选框": [
+        "选项1",
+        "选项2"
+    ],
+    "地址": {
+        "province": "湖南省",
+        "city": "长沙市",
+        "district": "芙蓉区",
+        "detail": "韶山北路"
+    },
+    "定位": {
+        "province": "湖南省",
+        "city": "长沙市",
+        "district": "芙蓉区",
+        "detail": "韶山北路",
+        "lnglatXY": [
+            112.99627,
+            28.19393
+        ]
+    },
+    "图片": [
+        {
+            "_id": "5672a3f824d4691ea8e1086f",
+            "bucket": "form-file",
+            "uploadTime": "2022-01-20T10:10:10Z",
+            "mime": "image/jpeg",
+            "name": "123.jpg",
+            "qnKey": "FvNMG4BF9LEsbSv3HaO5gA9U0rQz",
+            "size": 68065,
+            "uploader": "5d66359813f33ef2e45916f2"
+        }
+    ],
+    "附件": [],
+    "子表单": [
+        {
+            "单行文本_子表单": "张三",
+            "复选框组_子表单": [],
+            "图片_子表单": []
+        },
+        {
+            "单行文本_子表单": "张三",
+            "复选框组_子表单": [],
+            "图片_子表单": []
+        }
+    ],
+    "流水号": "00051",
+    "手写签名": [],
+    "成员单选": {
+        "_id": "5577ebc4504e8e77036d2a09",
+        "nickname": "万和"
+    },
+    "成员多选": [
+        {
+            "_id": "5577ebc4504e8e77036d2a09",
+            "nickname": "万和"
+        }
+    ],
+    "部门单选": {
+        "_id": "51d1177b964603db9e60a962",
+        "nickname": "人事部"
+    },
+    "部门多选": [
+        {
+            "_id": "51d1177b964603db9e60a962",
+            "nickname": "人事部"
+        }
+    ],
+    "node": {
+        "alias": "流程节点1",
+        "flowId": 1,
+        "flowName": "流程节点"
+    }
+}
+查询流程待办信息
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/flow_todo
+点击复制
+
+查询指定流程表单某个负责人的所有流程待办信息
+请求参数：
+参数	必须	类型	说明
+user_id	否	String	流程负责人成员id
+skip	否	Number	翻页起始值索引
+limit	否	Number	查询的数据条数，1~300，默认300
+filter	否	Object	数据筛选器
+filter.rel	否	String	筛选组合关系，and或or
+filter.cond	否	Array	过滤条件列表
+filter.cond.field	否	String	字段别名
+filter.cond.method	否	String	过滤方法
+filter.cond.value	否	Array	筛选值
+返回参数：
+参数	类型	说明
+data	Object	返回数据
+data.dataId	String	数据id
+data.appId	String	应用id
+data.entryId	String	表单id
+data.entryName	String	表单名称
+data.flowId	Number	节点id
+data.flowUrl	String	流程待办链接
+data.flowState	Number	流程状态
+data.updateTime	DateTime	更新时间
+data.creator	String	提交人id
+data.chargers	Array	节点负责人
+data.data	Array	流程简报信息
+data.flowFailureAction	Object	流转错误信息
+data.flowFailureAction.flowAction	String	
+data.flowFailureAction.err_code	String	
+data.createTime	Number	提交时间
+data.flowName	String	节点名称
+count	Number	符合条件代办数量
+请求示例：
+{
+    "user_id": "5d66359813f33ef2e45916f2",
+    "skip": 0,
+    "limit": 300,
+    "filter": {
+        "rel": "and",
+        "cond": [
+            {
+                "field": "单行文本",
+                "method": "eq",
+                "value": [
+                    "159"
+                ]
+            }
+        ]
+    }
+}
+响应数据样例：
+{
+    "data": [
+        {
+            "dataId": "562429be4c270a7ad636e808",
+            "appId": "572177e6951f4dc54168c1eb",
+            "entryId": "5ebc5c2deee7ea61f7ac25df",
+            "entryName": "流程表单",
+            "flowId": 1,
+            "flowUrl": "https://XXX.XXX.com//app/5d666b2353c5d34c282922a5/form/55e64dc2a899f8a1fa8eb888/data/5d666b2353c5d34c282922a5/flow/1",
+            "flowState": 0,
+            "updateTime": "2022-01-20 18:33:29",
+            "creator": "5d66359813f33ef2e45916f2",
+            "chargers": [
+                "5d66359813f33ef2e45916f2"
+            ],
+            "data": [],
+            "flowFailureAction": {
+                "flowAction": "forwardfail",
+                "err_code": "forward_no_charger"
+            },
+            "createTime": "2022-01-20 18:26:41",
+            "flowName": "流程节点2"
+        }
+    ],
+    "count": 24
+}
+查询流程待办数量
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/flow_todo_count
+点击复制
+
+查询指定流程表单某个负责人的所有流程待办总数
+请求参数：
+参数	必须	类型	说明
+user_id	是	String	流程负责人成员id
+skip	是	Number	翻页起始值索引
+limit	是	Number	查询的数据条数，1~300，默认300
+filter	是	Object	数据筛选器
+filter.rel	是	String	筛选组合关系，and或or
+filter.cond	是	Object	过滤条件列表
+filter.cond.field	是	String	字段别名
+filter.cond.method	是	String	过滤方法
+filter.cond.value	是	String	筛选值
+返回参数：
+参数	类型	说明
+count	Number	代办数量
+请求示例：
+{
+    "user_id": "5d66359813f33ef2e45916f2",
+    "skip": 0,
+    "limit": 1,
+    "filter": {
+        "rel": "and",
+        "cond": [
+            {
+                "field": "单行文本",
+                "method": "eq",
+                "value": [
+                    "123"
+                ]
+            }
+        ]
+    }
+}
+响应数据样例：
+{
+    "count": 3
+}
+查询流程节点配置信息
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/flow_node_info
+点击复制
+
+查询流程节点配置信息
+请求参数：无
+返回参数：
+参数	类型	说明
+version	String	流程版本
+status	String	状态 1设计 2启用
+flows	Object	
+flows.flowId	Number	节点id
+flows.flowName	String	节点名称
+flows.chargers	Object	节点负责人，内容参考抄送成员ccUsers
+flows.ccUsers	Object	抄送成员
+flows.ccUsers.departs	Array	部门id 部门id-dept：当前部门， 部门id-deptSub：当前部门及其子部门
+flows.ccUsers.dockcorpValue	Array	互联组织id
+flows.ccUsers.users	Array	成员id
+flows.ccUsers.dockuserValue	Array	对接人id
+flows.ccUsers.jobtitle	Array	职位 部门id-current-职位名称：当前部门职位，部门id-currentSub-职位名称：当前部门及其子部门的职位
+flows.ccUsers.outsiderMember	Array	外部联系人id
+flows.ccUsers.outsiderGroup	Array	外部联系人分组id
+flows.ccUsers.roles	Array	角色id
+flows.ccUsers.dockroleValue	Array	互联组织对接人角色id
+flows.ccUsers.public	Array	其他流程负责人 111000000000000000000002系统管理组 100000000000000000000000 流程发起人
+flows.ccUsers.widgets	Array	流程动态负责人 成员控件别名
+flows.ccUsers.deptWidgets	Array	流程动态负责人 部门控件别名 部门字段别名-dept：当前部门， 部门字段别名-deptSub：当前部门及其子部门
+flows.ccUsers.jobtitleManager	Object	流程动态负责人 职位
+flows.ccUsers.jobtitleManager.creator	Array	发起人职位 "0_职位名称", 直接部门的职位 "1_职位名称", 上级部门的职位 "2_职位名称", 三级部门的职位 "3_职位名称", 四级部门的职位 "4_职位名称", 五级部门的职位 "100_职位名称" 当前部门及子部门的职位
+flows.ccUsers.jobtitleManager.deptWidgets	Object	部门控件的职位
+flows.ccUsers.jobtitleManager.deptWidgets._widget_1700105620178	Array	部门控件职位 "0_职位名称", 直接部门的职位 "1_职位名称", 上级部门的职位 "2_职位名称", 三级部门的职位 "3_职位名称", 四级部门的职位 "4_职位名称", 五级部门的职位 "100_职位名称" 当前部门及子部门的职位
+flows.ccUsers.jobtitleManager.userWidgets	Object	成员控件的职位
+flows.ccUsers.jobtitleManager.userWidgets._widget_1700105620158	Array	成员控件职位 "0_职位名称", 直接部门的职位 "1_职位名称", 上级部门的职位 "2_职位名称", 三级部门的职位 "3_职位名称", 四级部门的职位 "4_职位名称", 五级部门的职位 "100_职位名称" 当前部门及子部门的职位
+flows.candidates	Object	节点转交人，内容参考抄送成员ccUsers
+flows.spareChargers	Object	负责人为空时转交的指定负责人，内容参考抄送成员ccUsers
+请求示例：
+null
+响应数据样例：
+[
+    {
+        "version": "1",
+        "status": "1",
+        "flows": [
+            {
+                "flowId": 1,
+                "flowName": "流程节点",
+                "chargers": [],
+                "ccUsers": {
+                    "departs": [
+                        "5f0d7cf9f4361283774fcac4-dept",
+                        "5f0d7cf9f4361283774fcac4-deptSub"
+                    ],
+                    "dockcorpValue": [
+                        "cli_a1657573547a900d",
+                        "wpacI8DQAA0nJ3fAlIOudx08pcqReL0g"
+                    ],
+                    "users": [
+                        "5c06e86f11f87c94fb1c24ee",
+                        "52b837e2e2ec5736831db555"
+                    ],
+                    "dockuserValue": [
+                        "b42ee027a157d4f2c0f06429",
+                        "1043b8d2b9cf2456acd144e0"
+                    ],
+                    "jobtitle": [
+                        "57692aedbb6039b04cf15eca-current-2",
+                        "57692aedbb6039b04cf15eca-currentSub-2"
+                    ],
+                    "outsiderMember": [
+                        "5a70ee08a0416de96518a811",
+                        "5043f034699af3458734f91c"
+                    ],
+                    "outsiderGroup": [
+                        "088391f780542c879e911697",
+                        "4e414053658c58d253a26c49"
+                    ],
+                    "roles": [
+                        "5d255365c73435619b72fcb0",
+                        "5d7664098c0e0bb8e9f4e0b8"
+                    ],
+                    "dockroleValue": [
+                        "0a74a89bfd16dbc56b178166",
+                        "332947b70c437a1990f5ce5e"
+                    ],
+                    "public": [
+                        "111000000000000000000002"
+                    ],
+                    "widgets": [
+                        "_widget_1700105620158",
+                        "_widget_1700294802023"
+                    ],
+                    "deptWidgets": [
+                        "_widget_1700105620178-dept",
+                        "_widget_1700105620178-deptSub"
+                    ],
+                    "jobtitleManager": {
+                        "creator": [
+                            "0_2",
+                            "1_2",
+                            "2_2",
+                            "3_2",
+                            "4_2",
+                            "100_1"
+                        ],
+                        "deptWidgets": {
+                            "_widget_1700105620178": [
+                                "0_1",
+                                "1_1",
+                                "2_1",
+                                "3_1",
+                                "4_1",
+                                "100_1"
+                            ]
+                        },
+                        "userWidgets": {
+                            "_widget_1700105620158": [
+                                "0_1",
+                                "1_1",
+                                "2_1",
+                                "3_1",
+                                "4_1",
+                                "100_1"
+                            ]
+                        }
+                    }
+                },
+                "candidates": [],
+                "spareChargers": []
+            }
+        ]
+    }
+]
+修改流程节点配置
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/update_flow_node
+点击复制
+
+开启/停用计划任务
+请求参数：
+参数	必须	类型	说明
+flowId	是	Number	
+version	是	Number	流程版本
+chargers	否	Object	节点负责人
+chargers.departs	否	Array	部门id 部门id-dept：当前部门， 部门id-deptSub：当前部门及其子部门
+chargers.dockcorpValue	否	Array	互联组织id
+chargers.users	否	Array	成员id
+chargers.dockuserValue	否	Array	互联组织对接人id
+chargers.jobtitle	否	Array	职位 部门id-current-职位名称：当前部门职位，部门id-currentSub-职位名称：当前部门及其子部门的职位
+chargers.outsiderMember	否	Array	外部联系人id
+chargers.outsiderGroup	否	Array	外部联系人分组id
+chargers.roles	否	Array	角色id
+chargers.dockroleValue	否	Array	互联组织对接人角色id
+chargers.widgets	否	Array	流程动态负责人 成员控件别名
+chargers.deptWidgets	否	Array	流程动态负责人 部门控件别名 部门字段别名-dept：当前部门， 部门字段别名-deptSub：当前部门及其子部门
+chargers.jobtitleManager	否	Object	流程动态负责人 职位
+chargers.jobtitleManager.creator	否	Array	发起人职位 "0_职位名称", 直接部门的职位 "1_职位名称", 上级部门的职位 "2_职位名称", 三级部门的职位 "3_职位名称", 四级部门的职位 "4_职位名称", 五级部门的职位 "100_职位名称" 当前部门及子部门的职位
+chargers.jobtitleManager.deptWidgets	否	Object	部门控件的职位
+chargers.jobtitleManager.deptWidgets._widget_1700105620178	否	Array	部门控件职位 "0_职位名称", 直接部门的职位 "1_职位名称", 上级部门的职位 "2_职位名称", 三级部门的职位 "3_职位名称", 四级部门的职位 "4_职位名称", 五级部门的职位 "100_职位名称" 当前部门及子部门的职位
+chargers.jobtitleManager.userWidgets	否	Object	成员控件的职位
+chargers.jobtitleManager.userWidgets._widget_1700105620158	否	Array	成员控件职位 "0_职位名称", 直接部门的职位 "1_职位名称", 上级部门的职位 "2_职位名称", 三级部门的职位 "3_职位名称", 四级部门的职位 "4_职位名称", 五级部门的职位 "100_职位名称" 当前部门及子部门的职位
+chargers.public	否	Array	其他流程负责人 111000000000000000000002系统管理组 100000000000000000000000 流程发起人
+ccUsers	否	Object	抄送成员，内容参考节点负责人chargers
+candidates	否	Object	节点转交成员可选范围，内容参考节点负责人chargers
+spareChargers	否	Object	负责人为空时转交的指定负责人，内容参考节点负责人chargers
+返回参数：
+参数	类型	说明
+code	Number	状态码
+msg	String	描述
+请求示例：
+null
+响应数据样例：
+{
+    "code": 200,
+    "msg": "成功"
+}
+查询表单字段结构
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/widgets
+点击复制
+
+获取指定表单的字段信息，不支持获取分割线字段和关联查询字段
+请求参数：无
+返回参数：
+参数	类型	说明
+widgets	Array	字段集合
+widgets.name	String	字段别名
+widgets.type	String	字段类型
+widgets.title	String	字段标题
+widgets.widget	String	字段原始别名
+widgets.isRequired	Bool	字段是否必填
+widgets.data	Array	仅子表单有，里面包含子表单字段信息
+请求示例：
+null
+响应数据样例：
+{
+    "widgets": [
+        {
+            "name": "单行文本",
+            "type": "text",
+            "title": "单行文本",
+            "widget": "_widget_1642555926136",
+            "isRequired": true
+        }
+    ]
+}
+获取表单基本信息
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/info
+点击复制
+
+获取指定表单的基本信息
+请求参数：无
+返回参数：
+参数	类型	说明
+name	String	表单名称
+type	String	表单类型
+formId	String	表单id
+hasFlow	Boolean	流程是否开启
+hasCoop	String	是否流程表，0为是，1为否
+public	Object	外链
+public.isPublic	Boolean	是否开启外链
+public.publicLink	String	外链url
+query	Object	公开查询
+query.isQuery	Boolean	是否开启公开查询
+query.queryLink	String	公开查询url
+请求示例：
+null
+响应数据样例：
+{
+    "name": "流程表单",
+    "type": "form",
+    "formId": "5ebc5c2deee7ea61f7ac25df",
+    "hasFlow": true,
+    "hasCoop": "0",
+    "public": {
+        "isPublic": false,
+        "publicLink": ""
+    },
+    "query": {
+        "isQuery": true,
+        "queryLink": "https://xxx.xxxxxx.com/q/52412e10bc3ffc2750f73afd"
+    }
+}
+查询表单计划任务列表
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/schedule_list
+点击复制
+
+查询表单计划任务列表
+请求参数：
+参数	必须	类型	说明
+useUtcFormat	否	Boolean	时间返回值是否使用Utc格式
+返回参数：
+参数	类型	说明
+type	String	计划任务类型，repeat（循环执行）fixedTime（定时执行）loop（重复执行）
+name	String	计划任务名称
+enabled	Boolean	是否启用
+repeatTime	String	重复执行开始执行时间
+repeatWeek	String	重复执行星期，0~6（星期天~星期六）
+repeatDay	Number	重复执行每月第几天，1~31
+repeatMonth	String	重复执行每年几月，1~12
+finish	Number	重复执行结束时间（时间戳）
+repeatNumber	Number	循环执行次数
+repeatSleep	Number	循环执行间隔
+repeatSleepType	String	循环执行间隔单位，day（天）、hours（小时）、minutes（分钟）
+fixedTime	Number	定时执行时间（时间戳）
+repeat	String	重复执行周期，1d（每天）1w（每周）1m（每月）1y（每年）
+lastInfo	Object	最后一次计划任务执行信息
+lastInfo.endTime	String	执行开始时间
+lastInfo.msg	String	执行结果描述
+lastInfo.startTime	String	执行结束时间
+startTime	Number	执行时间
+scheduleId	String	计划任务ID
+请求示例：
+null
+响应数据样例：
+[
+    {
+        "type": "loop",
+        "name": "未命名的计划任务",
+        "enabled": true,
+        "repeatTime": "09:00",
+        "repeatWeek": null,
+        "repeatDay": null,
+        "repeatMonth": null,
+        "finish": null,
+        "repeatNumber": 1,
+        "repeatSleep": 30,
+        "repeatSleepType": "minutes",
+        "fixedTime": null,
+        "repeat": "1w",
+        "lastInfo": {
+            "endTime": "2022-09-26 15:27:15",
+            "msg": "执行成功.",
+            "startTime": "2022-09-26 15:27:14"
+        },
+        "startTime": 1664352360000,
+        "scheduleId": "5a294f51e8f1bc8f44063039"
+    }
+]
+执行计划任务
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/schedule_exec
+点击复制
+
+执行计划任务
+请求参数：
+参数	必须	类型	说明
+scheduleId	是	String	计划任务ID
+返回参数：
+参数	类型	说明
+code	Number	状态码
+msg	String	描述
+请求示例：
+{
+    "scheduleId": "5a294f51e8f1bc8f44063039"
+}
+响应数据样例：
+{
+    "code": 200,
+    "msg": "成功"
+}
+开启/停用计划任务
+
+版本：
+v1
+https://wx.hnzhcyy.cn/openapi/v1/app/505340306be546d79a51dbc0/entry/5c6f82ba000746576e209685/schedule_enabled
+点击复制
+
+开启/停用计划任务
+请求参数：
+参数	必须	类型	说明
+scheduleId	是	String	计划任务ID
+enabled	是	Boolean	是否启用
+返回参数：
+参数	类型	说明
+code	Number	状态码
+msg	String	描述
+请求示例：
+{
+    "scheduleId": "5a294f51e8f1bc8f44063039",
+    "enabled": true
+}
+响应数据样例：
+{
+    "code": 200,
+    "msg": "成功"
+}

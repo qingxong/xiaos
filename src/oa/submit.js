@@ -3,6 +3,7 @@ const {
   isOrderIntent,
   parseOrderText,
   getMissingRequired,
+  validateAndNormalize,
   HELP_TEXT,
 } = require("./parse-order");
 
@@ -32,18 +33,33 @@ async function trySubmitOrder(text) {
     };
   }
 
+  const validated = validateAndNormalize(order);
+  if (!validated.ok) {
+    return {
+      handled: true,
+      replyText:
+        `**选项校验未通过**\n\n${validated.errors.map((e) => `- ${e}`).join("\n")}\n\n${HELP_TEXT}`,
+    };
+  }
+
+  const normalized = validated.order;
+
   try {
-    const result = await createOrder(order);
+    const result = await createOrder(normalized);
     return {
       handled: true,
       replyText:
         `**提单成功**\n\n` +
         `- 订单ID：\`${result.orderId || "（见OA）"}\`\n` +
-        `- 客户：${order.customerName}\n` +
-        `- 电话：${order.customerPhone}\n` +
-        `- 标的企业：${order.enterprise}\n` +
-        `- 业务：${order.businessName}\n\n` +
-        `请在 OA 系统中核对详情。`,
+        `- 客户：${normalized.customerName}\n` +
+        `- 电话：${normalized.customerPhone}\n` +
+        `- 标的企业：${normalized.enterprise}\n` +
+        `- 业务：${normalized.businessName}\n` +
+        (normalized.customerType
+          ? `- 客户类型：${normalized.customerType}\n`
+          : "") +
+        (normalized.company ? `- 发起公司：${normalized.company}\n` : "") +
+        `\n请在 OA 系统中核对详情。`,
       orderId: result.orderId,
     };
   } catch (err) {
@@ -51,7 +67,7 @@ async function trySubmitOrder(text) {
     return {
       handled: true,
       replyText:
-        `**提单失败**\n\n${err.message}\n\n请检查下拉选项是否与 OA 完全一致，或联系管理员查看日志。`,
+        `**提单失败**\n\n${err.message}\n\n若选项已校验通过仍失败，请联系管理员查看 OA 日志。`,
     };
   }
 }
