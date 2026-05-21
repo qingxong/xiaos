@@ -15,7 +15,8 @@ const KEY_ALIASES = {
   备注: "taskRemark",
 };
 
-function isOrderIntent(text) {
+/** 键值对模板提单（不走 LLM） */
+function isTemplateOrderIntent(text) {
   const t = String(text || "").trim();
   if (!t) return false;
   return (
@@ -23,6 +24,11 @@ function isOrderIntent(text) {
     /^\/提单\b/m.test(t) ||
     /客户姓名\s*[:：]/.test(t)
   );
+}
+
+/** @deprecated 使用 isTemplateOrderIntent */
+function isOrderIntent(text) {
+  return isTemplateOrderIntent(text);
 }
 
 function parseOrderText(text) {
@@ -77,6 +83,7 @@ const HELP_TEXT = buildHelpText();
 
 module.exports = {
   isOrderIntent,
+  isTemplateOrderIntent,
   parseOrderText,
   getMissingRequired,
   validateAndNormalize,

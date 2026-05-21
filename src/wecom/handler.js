@@ -102,7 +102,7 @@ function buildReplyPlan(parsed) {
         responseUrl,
         replyText:
           `您好，我是**智汇提单助手**。\n\n` +
-          `请按格式发送提单信息，我将自动写入 OA：\n\n${HELP_TEXT}`,
+          `请按格式发送提单，或直接发**口语描述**（AI 解析），我将写入 OA：\n\n${HELP_TEXT}`,
       };
     }
     return { shouldReply: false, reason: `事件 ${data.event?.eventtype}` };
@@ -123,7 +123,7 @@ function buildReplyPlan(parsed) {
 }
 
 /**
- * 处理用户消息（后续接 LLM + OA）
+ * 处理用户消息（模板提单 + 通义千问口语解析 + OA）
  */
 async function handleMessage(parsed) {
   const plan = buildReplyPlan(parsed);

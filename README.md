@@ -81,11 +81,23 @@ npm run build:oa-options
 
 产出 `config/oa-options.json`（256 项业务名称）。提单前会校验业务名称/客户类型/发起公司；支持口语别名（如 记账→代账续费）。
 
+### 口语提单（通义千问）
+
+配置 `DASHSCOPE_API_KEY`、`LLM_ENABLED=true`、`LLM_MODEL=qwen-turbo` 后，销售可直接发自然语言，例如：
+
+```text
+张总 13800138000，帮他在海口注册一家贸易有限公司，直客
+```
+
+流程：千问抽取字段 → 本地别名/模糊匹配 OA 业务名 → 校验 → `data_create`。  
+键值对模板（`提单` + `客户姓名：`）仍优先走模板解析，不消耗 LLM。
+
 ## 环境变量
 
 见 `.env.example`。必填：`WECOM_TOKEN`、`WECOM_ENCODING_AES_KEY`。可选：`WECOM_CORP_ID`（企业 ID；若 URL 校验仍失败，在企微管理后台查看企业 ID 填入）。
 
 ## 后续扩展
 
-- `src/wecom/handler.js`：接入 LLM 解析
-- 新建 `src/oa/client.js`：调用 OA `data_create`（见《提单的API文档》）
+- 低置信度业务名人工确认（Top3 点选）
+- 企微 userid ↔ OA 销售负责人映射
+- 向量检索业务名称
