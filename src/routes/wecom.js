@@ -2,6 +2,7 @@ const express = require("express");
 const { verifyUrl, decryptMessage } = require("../wecom/crypto");
 const { logPostBody } = require("../wecom/log");
 const { parseIncomingMessage, handleMessage } = require("../wecom/handler");
+const { sendActiveReply } = require("../wecom/reply");
 
 const router = express.Router();
 
@@ -63,7 +64,16 @@ router.post(
       );
 
       const parsed = parseIncomingMessage(plain);
-      await handleMessage(parsed);
+      const plan = await handleMessage(parsed);
+
+      if (plan.shouldReply && plan.responseUrl) {
+        try {
+          await sendActiveReply(plan.responseUrl, plan.replyText);
+          console.log("[wecom] 主动回复成功");
+        } catch (replyErr) {
+          console.error("[wecom] 主动回复失败:", replyErr.message);
+        }
+      }
 
       return res.send("success");
     } catch (err) {
