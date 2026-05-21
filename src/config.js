@@ -18,6 +18,9 @@ function assertConfig() {
       `[warn] 缺少环境变量: ${missing.join(", ")} — 企微 URL 校验将无法通过`
     );
   }
+  if (!process.env.API_KEY) {
+    console.warn("[warn] 缺少 API_KEY — OA 提单不可用");
+  }
 }
 
 module.exports = {

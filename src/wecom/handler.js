@@ -1,4 +1,5 @@
 const { shouldProcess } = require("./dedup");
+const { trySubmitOrder } = require("../oa/submit");
 
 /**
  * 解析解密后的消息（XML 或 JSON 文本），返回简要结构
@@ -95,27 +96,25 @@ function buildReplyPlan(parsed) {
       return { shouldReply: false, reason: "用户反馈事件" };
     }
     if (data.event?.eventtype === "enter_chat") {
+      const { HELP_TEXT } = require("../oa/submit");
       return {
         shouldReply: true,
         responseUrl,
         replyText:
-          "您好，我是**智汇提单助手**。\n\n请直接发送客户情况或提单说明（例如：客户姓名、电话、业务类型），我会协助您整理并提交 OA 提单。",
+          `您好，我是**智汇提单助手**。\n\n` +
+          `请按格式发送提单信息，我将自动写入 OA：\n\n${HELP_TEXT}`,
       };
     }
     return { shouldReply: false, reason: `事件 ${data.event?.eventtype}` };
   }
 
-  const preview = extractTextFromJson(data) || "(无文本)";
+  const preview = extractTextFromJson(data) || "";
   const fromUser = data.from?.userid || "";
 
   return {
     shouldReply: true,
     responseUrl,
-    replyText:
-      `已收到您的消息。\n\n` +
-      `> ${String(preview).slice(0, 500).replace(/\n/g, "\n> ")}\n\n` +
-      (fromUser ? `（来自：${fromUser}）\n\n` : "") +
-      `提单功能开发中，后续将支持对话自动写入 OA。`,
+    replyText: "", // 由 handleMessage 填充（含 OA 提单结果）
     preview,
     fromUser,
     msgid,
@@ -140,6 +139,10 @@ async function handleMessage(parsed) {
     from: plan.fromUser,
     preview: String(plan.preview || "").slice(0, 500),
   });
+
+  const oa = await trySubmitOrder(plan.preview || "");
+  plan.replyText = oa.replyText;
+  if (oa.orderId) plan.orderId = oa.orderId;
 
   return plan;
 }

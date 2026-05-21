@@ -59,6 +59,20 @@ POST 回调支持智能机器人 **JSON** 格式：`{"tousername":"...","encrypt
 
 收到用户消息后，使用回调里的 **`response_url`** 主动回复 markdown（日志：`主动回复成功`）。`response_url` 仅可使用一次、有效期约 1 小时。
 
+## OA 最小提单
+
+消息以「提单」开头或包含 `客户姓名：` 时，解析字段并调用 `data_create`：
+
+```
+提单
+客户姓名：张三
+客户电话：13800138000
+标的企业：某某有限公司
+业务名称：（须与 OA 下拉选项完全一致）
+```
+
+环境变量：`API_KEY`（必填），可选 `OA_DEFAULT_*`、`OA_START_WORKFLOW`。
+
 ## 环境变量
 
 见 `.env.example`。必填：`WECOM_TOKEN`、`WECOM_ENCODING_AES_KEY`。可选：`WECOM_CORP_ID`（企业 ID；若 URL 校验仍失败，在企微管理后台查看企业 ID 填入）。
