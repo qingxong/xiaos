@@ -63,23 +63,60 @@ class WXBizMsgCrypt {
     return message;
   }
 
-  decryptMsg(msgSignature, timestamp, nonce, xml) {
-    const encrypt = extractEncrypt(xml);
+  /**
+   * 解密 POST 回调（支持智能机器人 JSON 与旧版 XML）
+   * JSON: { "tousername": "...", "encrypt": "..." }
+   */
+  decryptPostBody(msgSignature, timestamp, nonce, body) {
+    const { encrypt, format } = extractEncryptPayload(body);
     const signature = this.getSignature(timestamp, nonce, encrypt);
     if (signature !== msgSignature) {
       throw new Error("签名校验失败");
     }
-    const { message } = this.decrypt(encrypt);
-    return message;
+    const { message, id } = this.decrypt(encrypt);
+    if (this.receiveId && id && id !== this.receiveId) {
+      throw new Error("ReceiveId 不匹配");
+    }
+    return { message, format };
+  }
+
+  /** @deprecated 使用 decryptPostBody */
+  decryptMsg(msgSignature, timestamp, nonce, body) {
+    return this.decryptPostBody(msgSignature, timestamp, nonce, body).message;
   }
 }
 
-function extractEncrypt(xml) {
-  const cdata = xml.match(/<Encrypt><!\[CDATA\[([\s\S]*?)\]\]><\/Encrypt>/);
-  if (cdata) return cdata[1];
-  const plain = xml.match(/<Encrypt>([^<]*)<\/Encrypt>/);
-  if (plain) return plain[1];
-  throw new Error("未找到 Encrypt 字段");
+/**
+ * @returns {{ encrypt: string, format: 'json'|'xml' }}
+ */
+function extractEncryptPayload(body) {
+  const trimmed = String(body || "").trim();
+  if (!trimmed) {
+    throw new Error("空消息体");
+  }
+
+  if (trimmed.startsWith("{")) {
+    try {
+      const obj = JSON.parse(trimmed);
+      const enc = obj.encrypt ?? obj.Encrypt;
+      if (typeof enc === "string" && enc.length > 0) {
+        return { encrypt: enc, format: "json" };
+      }
+    } catch {
+      /* 非合法 JSON，继续尝试 XML */
+    }
+  }
+
+  const cdata = trimmed.match(
+    /<Encrypt><!\[CDATA\[([\s\S]*?)\]\]><\/Encrypt>/i
+  );
+  if (cdata) return { encrypt: cdata[1], format: "xml" };
+
+  const plain = trimmed.match(/<Encrypt>([^<]*)<\/Encrypt>/i);
+  if (plain) return { encrypt: plain[1], format: "xml" };
+
+  throw new Error("未找到 encrypt 字段（支持 JSON.encrypt 或 XML Encrypt）");
 }
 
 module.exports = WXBizMsgCrypt;
+module.exports.extractEncryptPayload = extractEncryptPayload;

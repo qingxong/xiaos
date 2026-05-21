@@ -25,8 +25,14 @@ function verifyUrl(msgSignature, timestamp, nonce, echostr) {
   return getCrypt().verifyURL(msgSignature, timestamp, nonce, echostr);
 }
 
-function decryptMessage(msgSignature, timestamp, nonce, xmlBody) {
-  return getCrypt().decryptMsg(msgSignature, timestamp, nonce, xmlBody);
+function decryptMessage(msgSignature, timestamp, nonce, body) {
+  const { message, format } = getCrypt().decryptPostBody(
+    msgSignature,
+    timestamp,
+    nonce,
+    body
+  );
+  return { message, format };
 }
 
 module.exports = { verifyUrl, decryptMessage, getCrypt };

@@ -33,19 +33,45 @@ function matchXml(xml, tag) {
 }
 
 /**
+ * 从智能机器人解密后的 JSON 中提取可读文本
+ */
+function extractTextFromJson(data) {
+  if (!data || typeof data !== "object") return "";
+
+  if (data.msgtype === "text") {
+    if (data.text?.content) return data.text.content;
+    if (typeof data.text === "string") return data.text;
+  }
+
+  if (data.msgtype === "event" && data.event) {
+    return `[事件] ${data.event.eventtype || JSON.stringify(data.event)}`;
+  }
+
+  if (data.content) return data.content;
+  return "";
+}
+
+/**
  * 处理用户消息（后续接 LLM + OA）
  */
 async function handleMessage(parsed) {
+  const fromJson =
+    parsed.type === "json" && parsed.data
+      ? parsed.data.from?.userid || parsed.data.from?.userId
+      : "";
+
   const preview =
     parsed.content ||
+    extractTextFromJson(parsed.data) ||
     (parsed.data && (parsed.data.text || parsed.data.content)) ||
     parsed.raw?.slice(0, 200) ||
     "(无文本)";
 
   console.log("[wecom] 收到消息:", {
     type: parsed.type,
-    msgType: parsed.msgType,
-    from: parsed.fromUser,
+    msgType: parsed.msgType || parsed.data?.msgtype,
+    from: parsed.fromUser || fromJson,
+    aibotid: parsed.data?.aibotid,
     preview: String(preview).slice(0, 500),
   });
 

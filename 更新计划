@@ -3,3 +3,9 @@ git add .
 git status
 git commit -m "feat: 添加企微提单机器人最小回调服务"
 git push
+
+1panel
+cd /opt/1panel/www/xiaos
+git pull
+npm install   # 仅 package.json 变了才需要
+# 1Panel 重启

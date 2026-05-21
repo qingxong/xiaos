@@ -55,6 +55,8 @@ curl -i "https://xiaos.hnzhcyy.cn/wecom/robot/callback"
 
 保存机器人前，GET 回调在无参数时可能返回 400，属正常；企微带参校验时会返回 `echostr` 明文。
 
+POST 回调支持智能机器人 **JSON** 格式：`{"tousername":"...","encrypt":"..."}`，日志会打印 `POST body kind=json` 与 `解密成功 format=json`。
+
 ## 环境变量
 
 见 `.env.example`。必填：`WECOM_TOKEN`、`WECOM_ENCODING_AES_KEY`。可选：`WECOM_CORP_ID`（企业 ID；若 URL 校验仍失败，在企微管理后台查看企业 ID 填入）。
